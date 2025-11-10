@@ -1,0 +1,20 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Slack",
+  "homepage": "https://github.com/SergeevaEA/frontend-project-12#readme",
+  "bugs": {
+    "url": "https://github.com/SergeevaEA/frontend-project-12/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeevaEA/frontend-project-12.git"
+  },
+  "license": "ISC",
+  "author": "Ekaterina Sergeeva",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
