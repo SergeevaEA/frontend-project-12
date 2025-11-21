@@ -3,6 +3,10 @@
 
 # [Messenger](ссылка)
 
+## Requirements
+
+Node.js & npm
+
 ## Setup
 
 ```bash
