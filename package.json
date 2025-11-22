@@ -1,17 +1,22 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Messenger",
-  "main": "src/index.js",
-  "scripts": {
-    "build": "npm run build --prefix frontend",
-    "start": "start-server -s ./frontend/dist",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd frontend && npm ci"
+  "type": "module",
+  "description": "Slack",
+  "homepage": "https://github.com/SergeevaEA/frontend-project-12#readme",
+  "bugs": {
+    "url": "https://github.com/SergeevaEA/frontend-project-12/issues"
   },
-  "author": "Ekaterina Sergeeva",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeevaEA/frontend-project-12.git"
+  },
   "license": "ISC",
+  "author": "Ekaterina Sergeeva",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6"
+    "@hexlet/chat-server": "^2.0.4"
   }
 }

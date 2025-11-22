@@ -1,23 +1,34 @@
-lint-frontend:
-	make -C frontend lint
+# Установка зависимостей фронтенда
+install-frontend:
+	cd frontend && npm ci
 
-install:
+# Установка зависимостей корня (если есть)
+install-root:
 	npm ci
 
-start-frontend:
-	make -C frontend start
+# Установка всех зависимостей сразу
+install: install-frontend install-root
 
-start-backend:
+# Запуск dev-сервера фронтенда
+dev:
+	cd frontend && npm run dev
+
+# Запуск чат-сервера
+start:
 	npx start-server -s ./frontend/dist
 
-#deploy: git push heroku main # настроить для Render
-
-start:
-	make start-backend
-
-develop:
-	make start-backend & make start-frontend
-
+# Сборка проекта для продакшена
 build:
+	cd frontend && npm run build
+
+# Предпросмотр сборки
+preview:
+	cd frontend && npm run preview
+
+# Линтинг фронтенда
+lint:
+	cd frontend && npx eslint .
+
+# Очистка сборки фронтенда
+clean:
 	rm -rf frontend/dist
-	npm run build
