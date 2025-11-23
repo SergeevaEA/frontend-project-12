@@ -1,7 +1,14 @@
 import React from 'react'
+import Header from '../components/Header.jsx'
+import SigninForm from '../components/SigninForm.jsx'
 
 const LoginPage = () => {
-    return <h1>Страница входа</h1>
+    return (
+        <div className="d-flex flex-column h-100">
+            <Header />
+            <SigninForm />
+        </div>
+    )
 }
 
 export default LoginPage
