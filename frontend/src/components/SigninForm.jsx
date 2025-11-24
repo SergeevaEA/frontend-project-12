@@ -1,13 +1,23 @@
-import React from 'react'
 import { useFormik } from 'formik'
-
+import axios from 'axios'
 import avatar from '../assets/avatar.jpg'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const SigninForm = () => {
+    const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
             name: '',
             password: '',
+        },
+        onSubmit: async (values) => {
+            axios.post('/api/login', values)
+                .then((response) => {
+                    localStorage.setItem('token', response.data.token)
+                    navigate('/')
+                })
+                .catch(() => toast('Неверные имя пользователя или пароль'))
         },
     });
     return (

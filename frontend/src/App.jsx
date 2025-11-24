@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
     return (
@@ -12,6 +13,7 @@ const App = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            <ToastContainer />
         </BrowserRouter>
     )
 }
