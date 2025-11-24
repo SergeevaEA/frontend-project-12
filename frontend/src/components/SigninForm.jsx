@@ -3,8 +3,12 @@ import axios from 'axios'
 import avatar from '../assets/avatar.jpg'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { login } from '../slices/user.js'
+import { useDispatch } from 'react-redux'
 
 const SigninForm = () => {
+    // Возвращает метод store.dispatch() текущего хранилища
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
@@ -12,9 +16,11 @@ const SigninForm = () => {
             password: '',
         },
         onSubmit: async (values) => {
-            axios.post('/api/login', values)
+            axios.post('/api/v1/login', values)
                 .then((response) => {
-                    localStorage.setItem('token', response.data.token)
+                  const token = response.data.token
+                    localStorage.setItem('token', token)
+                    dispatch(login({ username: values.name, token }))
                     navigate('/')
                 })
                 .catch(() => toast('Неверные имя пользователя или пароль'))
