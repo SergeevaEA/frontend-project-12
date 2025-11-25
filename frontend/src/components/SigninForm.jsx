@@ -12,16 +12,16 @@ const SigninForm = () => {
     const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
-            name: '',
+            username: '',
             password: '',
         },
         onSubmit: async (values) => {
-            axios.post('/api/v1/login', values)
+            await axios.post('/api/v1/login', values)
                 .then((response) => {
                   const token = response.data.token
-                    localStorage.setItem('token', token)
-                    dispatch(login({ username: values.name, token }))
-                    navigate('/')
+                  localStorage.setItem('token', token)
+                  dispatch(login({ username: values.username, token }))
+                  navigate('/')
                 })
                 .catch(() => toast('Неверные имя пользователя или пароль'))
         },
@@ -38,8 +38,8 @@ const SigninForm = () => {
                     <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
                       <h1 className="text-center mb-4">Войти</h1>
                       <div className="form-floating mb-3">
-                        <input name="name" required placeholder="Ваш ник" type="text" id="name" className="form-control" onChange={formik.handleChange} value={formik.values.name} />
-                        <label className="form-label" htmlFor="name">Ваш ник</label>
+                        <input name="username" required placeholder="Ваш ник" type="text" id="username" className="form-control" onChange={formik.handleChange} value={formik.values.name} />
+                        <label className="form-label" htmlFor="username">Ваш ник</label>
                       </div>
                       <div className="form-floating mb-4">
                         <input name="password" required placeholder="Пароль" type="password" id="password" className="form-control" onChange={formik.handleChange} value={formik.values.password} />

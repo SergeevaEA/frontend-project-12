@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const getMessages = async (token) => {
-    const response = axios.get('/api/v1/messages', {
+    const response = await axios.get('/api/v1/messages', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
