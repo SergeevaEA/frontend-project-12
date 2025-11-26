@@ -1,10 +1,19 @@
+import { useSelector } from 'react-redux'
+
 const CurrentChannelInfoBlock = () => {
+    const currentChannelId = useSelector(state => state.channels.currentChannelId)
+    const currentName = useSelector(state => state.channels.entities[currentChannelId].name)
+    const numerOfMessages = useSelector(state => {
+        return Object.values(state.messages.entities)
+            .filter(message => message.channelId === currentChannelId)
+            .length
+    })
     return (
         <div className="bg-light mb-4 p-3 shadow-sm small">
             <p className="m-0">
-                <b>Название текущего канала</b>
+                <b><span className="me-1">#</span>{currentName}</b>
             </p>
-            <span className="text-muted">Кол-во сообщений</span>
+            <span className="text-muted">{numerOfMessages} сообщений</span>
         </div>
     )
 }

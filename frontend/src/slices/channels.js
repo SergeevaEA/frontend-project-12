@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    entities: {},
-    ids: [],
+    entities: {
+        '1': { id: '1', name: 'general', removable: false }
+    },
+    ids: ['1'],
     currentChannelId: '1', // так как с сервера приходят данные [{ id: '1', name: 'general', removable: false }, ...]
 }
 
