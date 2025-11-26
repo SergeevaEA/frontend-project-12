@@ -5,13 +5,17 @@ import ChannelsBlock from '../components/ChannelsBlock'
 import CurrentChannelInfoBlock from '../components/CurrentChannelInfoBlock'
 import MessagesBlock from '../components/MessagesBlock'
 import MessageInputBlock from '../components/MessageInputBlock'
+import AddChannelForm from '../components/AddChannelForm'
+import { useEffect } from 'react'
 
 const HomePage = () => {
     const navigate = useNavigate()
-    const token = localStorage.getItem('token')
-    if (!token) {
-        navigate('/login')
-    }
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            navigate('/signin')
+        }
+    }, [navigate])
     return (
         <div>
             <div className="d-flex flex-column h-100">

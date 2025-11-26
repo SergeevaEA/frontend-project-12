@@ -18,7 +18,7 @@ const ChannelsBlock = () => {
     const currentChannelId = useSelector(state => state.channels.currentChannelId)
     return (
         <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-            {defaultChannels.map(channel => <DefaultChannel key={channel.id} channelName={channel.name} isCurrent={channel.id === currentChannelId} />)}
+            {defaultChannels.map(channel => <DefaultChannel key={channel.id} channelName={channel.name} channelId={channel.id} />)}
             {/*{userChannels.map(channel => <UserChannel key={channel.id} name={channel.name} />)}
                 <li className="nav-item w-100">
                     <div role="group" className="d-flex dropdown btn-group">

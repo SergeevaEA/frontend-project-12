@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { logout } from './user.js'
 
 const initialState = {
     entities: {
@@ -20,8 +21,22 @@ const channelsSlice = createSlice({
             })
             state.ids = channels.map(ch => ch.id)
         },
-    }
+        postNewChannel: (state, action ) => {
+            const newChannel = action.payload
+            state.entities[newChannel.id] = newChannel
+        },
+        setCurrentChannelId: (state, action) => {
+            state.currentChannelId = action.payload
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(logout, (state) => {
+            state.entities = { '1': { id: '1', name: 'general', removable: false } }
+            state.ids = ['1']
+            state.currentChannelId = '1'
+        })
+    },
 })
 
-export const { setChannels } = channelsSlice.actions
+export const { setChannels, postNewChannel, setCurrentChannelId } = channelsSlice.actions
 export default channelsSlice.reducer

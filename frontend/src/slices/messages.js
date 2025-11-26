@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { logout } from './user.js'
 
 const initialState = {
     entities: {},
@@ -22,7 +23,13 @@ const messagesSlice = createSlice({
             state.ids.push(message.id)
             state.entities[message.id] = message
         }
-    }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(logout, (state) => {
+            state.entities = {}
+            state.ids = []
+        })
+    },
 })
 
 export const { setMessages, postMessage } = messagesSlice.actions

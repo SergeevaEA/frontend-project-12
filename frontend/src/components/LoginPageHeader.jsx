@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom'
+
 const Header = () => {
     return (
         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
             <div className="container">
-                <a className="navbar-brand" href="/">Hexlet Chat</a>
+                <Link className="navbar-brand" to="/">Hexlet Chat</Link>
             </div>
         </nav>
     )

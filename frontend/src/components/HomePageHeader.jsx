@@ -1,9 +1,20 @@
+import { logout } from '../slices/user.js'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+
 const Header = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const handleClick = () => {
+        dispatch(logout())
+        localStorage.removeItem('token')
+        navigate('/signin')
+    }
     return (
         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
             <div className="container">
-                <a className="navbar-brand" href="/">Hexlet Chat</a>
-                <button type="button" className="btn btn-primary">Выйти</button>
+                <Link className="navbar-brand" to="/">Hexlet Chat</Link>
+                <button type="button" onClick={handleClick} className="btn btn-primary">Выйти</button>
             </div>
         </nav>
     )
