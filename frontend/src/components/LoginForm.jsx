@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { login } from '../slices/user.js'
 import { useDispatch } from 'react-redux'
 
-const SigninForm = () => {
+const LoginForm = () => {
     // Возвращает метод store.dispatch() текущего хранилища
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -19,8 +19,10 @@ const SigninForm = () => {
             await axios.post('/api/v1/login', values)
                 .then((response) => {
                   const token = response.data.token
+                  const username = values.username
                   localStorage.setItem('token', token)
-                  dispatch(login({ username: values.username, token }))
+                  localStorage.setItem('username', username)
+                  dispatch(login({ username, token }))
                   navigate('/')
                 })
                 .catch(() => toast('Неверные имя пользователя или пароль'))
@@ -38,7 +40,7 @@ const SigninForm = () => {
                     <form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
                       <h1 className="text-center mb-4">Войти</h1>
                       <div className="form-floating mb-3">
-                        <input name="username" required placeholder="Ваш ник" type="text" id="username" className="form-control" onChange={formik.handleChange} value={formik.values.name} />
+                        <input name="username" required placeholder="Ваш ник" type="text" id="username" className="form-control" onChange={formik.handleChange} value={formik.values.username} />
                         <label className="form-label" htmlFor="username">Ваш ник</label>
                       </div>
                       <div className="form-floating mb-4">
@@ -60,4 +62,4 @@ const SigninForm = () => {
         </div>)
 }
 
-export default SigninForm
+export default LoginForm

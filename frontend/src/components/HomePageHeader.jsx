@@ -8,7 +8,8 @@ const Header = () => {
     const handleClick = () => {
         dispatch(logout())
         localStorage.removeItem('token')
-        navigate('/signin')
+        localStorage.removeItem('username')
+        navigate('/login')
     }
     return (
         <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">

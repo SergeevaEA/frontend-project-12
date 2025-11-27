@@ -7,13 +7,19 @@ import MessagesBlock from '../components/MessagesBlock'
 import MessageInputBlock from '../components/MessageInputBlock'
 import AddChannelForm from '../components/AddChannelForm'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { login } from '../slices/user'
 
 const HomePage = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     useEffect(() => {
         const token = localStorage.getItem('token')
+        const username = localStorage.getItem('username')
         if (!token) {
-            navigate('/signin')
+            navigate('/login')
+        } else {
+            dispatch(login({ username, token }))
         }
     }, [navigate])
     return (
