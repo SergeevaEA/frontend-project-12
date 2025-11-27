@@ -6,13 +6,14 @@ import CurrentChannelInfoBlock from '../components/CurrentChannelInfoBlock'
 import MessagesBlock from '../components/MessagesBlock'
 import MessageInputBlock from '../components/MessageInputBlock'
 import AddChannelForm from '../components/AddChannelForm'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '../slices/user'
 
 const HomePage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [ isOpen, setIsOpen ] = useState(false)
     useEffect(() => {
         const token = localStorage.getItem('token')
         const username = localStorage.getItem('username')
@@ -31,7 +32,8 @@ const HomePage = () => {
                         <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
                             <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
                                 <b>Каналы</b>
-                                <PlusButton />
+                                <PlusButton onClick={() => setIsOpen(true)} />
+                                <AddChannelForm isOpen={isOpen} setIsOpen={setIsOpen} />
                             </div>
                             <ChannelsBlock />
                         </div>

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { setChannels } from '../slices/channels.js'
 import getChannels from '../api/getChannelsData.js'
 import DefaultChannel from './DefaultChannel.jsx'
+import UserChannel from './UserChannel.jsx'
 
 const ChannelsBlock = () => {
     const dispatch = useDispatch()
@@ -19,7 +20,8 @@ const ChannelsBlock = () => {
     return (
         <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
             {defaultChannels.map(channel => <DefaultChannel key={channel.id} channelName={channel.name} channelId={channel.id} />)}
-            {/*{userChannels.map(channel => <UserChannel key={channel.id} name={channel.name} />)}
+            {userChannels.map(channel => <UserChannel key={channel.id} channelName={channel.name} channelId={channel.id} />)}
+            {/*
                 <li className="nav-item w-100">
                     <div role="group" className="d-flex dropdown btn-group">
                         <button type="button" className="w-100 rounded-0 text-start text-truncate btn">

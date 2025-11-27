@@ -6,7 +6,7 @@ const initialState = {
         '1': { id: '1', name: 'general', removable: false },
         '2': { id: '2', name: 'random', removable: false }
     },
-    ids: ['1'],
+    ids: ['1', '2'],
     currentChannelId: '1', // так как с сервера приходят данные [{ id: '1', name: 'general', removable: false }, ...]
 }
 
@@ -25,6 +25,7 @@ const channelsSlice = createSlice({
         postNewChannel: (state, action ) => {
             const newChannel = action.payload
             state.entities[newChannel.id] = newChannel
+            state.ids.push(newChannel.id)
         },
         setCurrentChannelId: (state, action) => {
             state.currentChannelId = action.payload
