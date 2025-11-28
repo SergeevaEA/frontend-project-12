@@ -40,7 +40,9 @@ const HomePage = () => {
                         <div className="col p-0 h-100">
                             <div className="d-flex flex-column h-100">
                                 <CurrentChannelInfoBlock />
-                                <MessagesBlock />
+                                <div className="flex-grow-1 overflow-auto">
+                                    <MessagesBlock />
+                                </div>
                                 <div className="mt-auto px-5 py-3">
                                     <MessageInputBlock />
                                 </div>

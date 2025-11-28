@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import { setCurrentChannelId } from "../slices/channels"
+import { Button } from 'react-bootstrap'
 
 const DefaultChannel = ({ channelName, channelId }) => {
     const dispatch = useDispatch()
@@ -10,7 +11,13 @@ const DefaultChannel = ({ channelName, channelId }) => {
     }
     return (
         <li className="nav-item w-100">
-                <button type="button" onClick={handleClick} className={`w-100 rounded-0 text-start btn ${isCurrent ? 'btn-secondary' : ''}`}><span className="me-1">#</span>{channelName}</button>
+            <Button 
+              className="w-100 rounded-0 text-start"
+              variant={isCurrent ? 'secondary' : 'light'}
+              onClick={handleClick} 
+            >
+              <span className="me-1">#</span>{channelName}
+            </Button>
         </li>
     )
 }

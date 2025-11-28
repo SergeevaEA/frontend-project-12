@@ -1,28 +1,40 @@
-import { useSelector, useDispatch } from "react-redux"
-import { setCurrentChannelId } from "../slices/channels"
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentChannelId } from "../slices/channels";
+import { Dropdown, ButtonGroup, Button } from "react-bootstrap";
 
 const UserChannel = ({ channelName, channelId }) => {
-    const dispatch = useDispatch()
-    const currentChannelId = useSelector(state => state.channels.currentChannelId)
-    const isCurrent = (channelId === currentChannelId) ? true : false
-    const handleClick = () => {
-        dispatch(setCurrentChannelId(channelId))
-    }
-    return (
-        <li className="nav-item w-100">
-            <div role="group" className="d-flex dropdown btn-group">
-                <button type="button" onClick={handleClick} className={`w-100 rounded-0 text-start text-truncate btn ${isCurrent ? 'btn-secondary' : ''}`}>
-                    <span className="me-1">#</span>{channelName}</button>
-                    <button type="button" id="react-aria2985184757-:r0:" aria-expanded="false" className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn">
-                    <span className="visually-hidden">Управление каналом</span>
-                </button>
-                <div x-placement="bottom-start" aria-labelledby="react-aria2985184757-:r0:" className="dropdown-menu" data-popper-reference-hidden="false" data-popper-escaped="false" data-popper-placement="bottom-start" style={{position: 'absolute', inset: '0px auto auto 0px', transform: 'translate3d(232.5px, 348px, 0px)'}}>
-                    <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">Удалить</a>
-                    <a data-rr-ui-dropdown-item="" className="dropdown-item" role="button" tabIndex="0" href="#">Переименовать</a>
-                </div>
-            </div>
-        </li>
-    )
-}
+  const dispatch = useDispatch();
+  const currentChannelId = useSelector(state => state.channels.currentChannelId);
+  const isCurrent = channelId === currentChannelId;
 
-export default UserChannel
+  const handleClick = () => {
+    dispatch(setCurrentChannelId(channelId));
+  };
+
+  return (
+    <li className="nav-item w-100">
+      <Dropdown as={ButtonGroup} className="d-flex w-100">
+        <Button
+          className="w-100 text-start text-truncate rounded-0"
+          variant={isCurrent ? "secondary" : "light"}
+          onClick={handleClick}
+        >
+          <span className="me-1 text-truncate">#</span>{channelName}
+        </Button>
+
+        <Dropdown.Toggle split variant={isCurrent ? "secondary" : "light"} />
+
+        <Dropdown.Menu>
+          <Dropdown.Item href="#" as="button">
+            Удалить
+          </Dropdown.Item>
+          <Dropdown.Item href="#" as="button">
+            Переименовать
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </li>
+  );
+};
+
+export default UserChannel;
