@@ -1,51 +1,49 @@
-import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux';
-import addChannel from '../api/addChannel.js'
-import { useRef, useEffect } from 'react'
-import { postNewChannel, setCurrentChannelId } from '../slices/channels.js';
-import * as yup from 'yup'
+import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Button, Form } from 'react-bootstrap'
+import { useFormik } from 'formik'
+import { useRef, useEffect } from 'react'
+import * as yup from 'yup'
+import { editChannel } from '../slices/channels.js'
+import editChannelRequest from '../api/removeChannelRequest.js'
 
-const AddChannelForm = ({ isOpen, setIsOpen }) => {
+const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsOpenEditChannelForm }) => {
     const dispatch = useDispatch()
     const inputRef = useRef(null)
     const token = useSelector(state => state.user.token)
     const channels = useSelector(state => state.channels.entities)
     const channelsNames = Object.values(channels).map(channel => channel.name)
 
-    const AddChannelSchema = yup.object().shape({
+    useEffect(() => {
+        if (isOpenEditChannelForm) {
+            inputRef.current.focus()
+        }
+    }, [isOpenEditChannelForm])
+
+    const EditChannelSchema = yup.object().shape({
         name: yup
             .string()
             .min(3, 'От 3 до 20 символов')
             .max(20, 'От 3 до 20 символов')
             .required('Обязательное поле')
-            .test('isUnique', 'Должно быть уникальным', value => !channelsNames.includes(value)),
+            .test('isUnique', 'Должно быть уникальным', value => value === channelName || !channelsNames.includes(value)),
     })
 
     const formik = useFormik({
-        initialValues: { name: '' },
-        validationSchema: AddChannelSchema,
+        initialValues: { name: channelName },
+        enableReinitialize: true, // инициализируем форму каждый раз, когда initialValues изменяются
+        validationSchema: EditChannelSchema,
         onSubmit: async (value, { resetForm }) => {
-            const newChannel = await addChannel(token, { name: value.name })
-            dispatch(postNewChannel(newChannel))
-            dispatch(setCurrentChannelId(newChannel.id))
+            await editChannelRequest(token, channelId, value.name);
+            dispatch(editChannel({ id: channelId, newName: value.name} ))
             resetForm()
-            setIsOpen(false)
+            setIsOpenEditChannelForm(false)
         }
     })
 
-    // Сбрасываем форму каждый раз при открытии модалки и устанавливаем фокус
-    useEffect(() => {
-        if (isOpen) {
-            inputRef.current.focus()
-            formik.resetForm()
-        }
-    }, [isOpen])
-
     return (
-        <Modal show={isOpen} onHide={() => setIsOpen(false)} centered>
+        <Modal show={isOpenEditChannelForm} onHide={() => setIsOpenEditChannelForm(false)} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Добавить канал</Modal.Title>
+                <Modal.Title>Переименовать канал</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
@@ -57,14 +55,13 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
                             onChange={formik.handleChange}
                             value={formik.values.name}
                             isInvalid={formik.touched.name && !!formik.errors.name}
-                            placeholder="Имя канала"
                         />
                         <Form.Control.Feedback type="invalid">
                             {formik.errors.name}
                         </Form.Control.Feedback>
                     </Form.Group>
                     <div className="d-flex justify-content-end">
-                        <Button variant="secondary" className="me-2" onClick={() => setIsOpen(false)}>
+                        <Button variant="secondary" onClick={() => setIsOpenEditChannelForm(false)} className="me-2">
                             Отменить
                         </Button>
                         <Button type="submit" variant="primary">Отправить</Button>
@@ -75,4 +72,4 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
     )
 }
 
-export default AddChannelForm
+export default EditChannelForm

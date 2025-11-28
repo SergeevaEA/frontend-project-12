@@ -1,14 +1,20 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentChannelId } from "../slices/channels";
+import { useState } from 'react'
 import { Dropdown, ButtonGroup, Button } from "react-bootstrap";
+import { setCurrentChannelId } from "../slices/channels";
+import RemoveChannelForm from './RemoveChannelForm.jsx'
+import EditChannelForm from "./EditChannelForm.jsx";
 
 const UserChannel = ({ channelName, channelId }) => {
-  const dispatch = useDispatch();
-  const currentChannelId = useSelector(state => state.channels.currentChannelId);
-  const isCurrent = channelId === currentChannelId;
+  const dispatch = useDispatch()
+  const currentChannelId = useSelector(state => state.channels.currentChannelId)
+  const isCurrent = channelId === currentChannelId
+
+  const [ isOpenRemoveChannelForm, setIsOpenRemoveChannelForm ] = useState(false)
+  const [ isOpenEditChannelForm, setIsOpenEditChannelForm ] = useState(false)
 
   const handleClick = () => {
-    dispatch(setCurrentChannelId(channelId));
+    dispatch(setCurrentChannelId(channelId))
   };
 
   return (
@@ -23,16 +29,17 @@ const UserChannel = ({ channelName, channelId }) => {
         </Button>
 
         <Dropdown.Toggle split variant={isCurrent ? "secondary" : "light"} />
-
         <Dropdown.Menu>
-          <Dropdown.Item href="#" as="button">
+          <Dropdown.Item onClick={() => setIsOpenRemoveChannelForm(true)} as="button">
             Удалить
           </Dropdown.Item>
-          <Dropdown.Item href="#" as="button">
+          <Dropdown.Item onClick={() => setIsOpenEditChannelForm(true)} as="button">
             Переименовать
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      <RemoveChannelForm channelId={channelId} isOpenRemoveChannelForm={isOpenRemoveChannelForm} setIsOpenRemoveChannelForm={setIsOpenRemoveChannelForm} />
+      <EditChannelForm channelId={channelId} channelName={channelName} isOpenEditChannelForm={isOpenEditChannelForm} setIsOpenEditChannelForm={setIsOpenEditChannelForm}/>
     </li>
   );
 };

@@ -16,7 +16,6 @@ const ChannelsBlock = () => {
     const orderedChannels = ids.map(id => entities[id])
     const defaultChannels = orderedChannels.filter(channel => channel.removable === false)
     const userChannels = orderedChannels.filter(channel => channel.removable === true)
-    const currentChannelId = useSelector(state => state.channels.currentChannelId)
     return (
         <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
             {defaultChannels.map(channel => <DefaultChannel key={channel.id} channelName={channel.name} channelId={channel.id} />)}

@@ -29,7 +29,18 @@ const channelsSlice = createSlice({
         },
         setCurrentChannelId: (state, action) => {
             state.currentChannelId = action.payload
-        }
+        },
+        removeChannel: (state, action) => {
+            const idToDelete = action.payload
+            delete state.entities[idToDelete]
+            state.ids = state.ids.filter(id => id !== idToDelete)
+
+            state.currentChannelId = '1'
+        },
+        editChannel: (state, action) => {
+            const { id, newName } = action.payload
+            state.entities[id].name = newName
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(logout, (state) => {
@@ -40,5 +51,5 @@ const channelsSlice = createSlice({
     },
 })
 
-export const { setChannels, postNewChannel, setCurrentChannelId } = channelsSlice.actions
+export const { setChannels, postNewChannel, setCurrentChannelId, removeChannel, editChannel } = channelsSlice.actions
 export default channelsSlice.reducer

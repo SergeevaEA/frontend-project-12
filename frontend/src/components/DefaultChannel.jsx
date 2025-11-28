@@ -12,11 +12,11 @@ const DefaultChannel = ({ channelName, channelId }) => {
     return (
         <li className="nav-item w-100">
             <Button 
-              className="w-100 rounded-0 text-start"
-              variant={isCurrent ? 'secondary' : 'light'}
-              onClick={handleClick} 
+                className="w-100 rounded-0 text-start"
+                variant={isCurrent ? 'secondary' : 'light'}
+                onClick={handleClick} 
             >
-              <span className="me-1">#</span>{channelName}
+                <span className="me-1">#</span>{channelName}
             </Button>
         </li>
     )

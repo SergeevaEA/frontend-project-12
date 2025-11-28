@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import pluralize from 'pluralize-ru'
 
 const CurrentChannelInfoBlock = () => {
     const currentChannelId = useSelector(state => state.channels.currentChannelId)
@@ -13,7 +14,7 @@ const CurrentChannelInfoBlock = () => {
             <p className="m-0">
                 <b><span className="me-1">#</span>{currentName}</b>
             </p>
-            <span className="text-muted">{numerOfMessages} сообщений</span>
+            <span className="text-muted">{numerOfMessages} {pluralize(numerOfMessages, 'сообщений', 'сообщение', 'сообщения', 'сообщений')}</span>
         </div>
     )
 }

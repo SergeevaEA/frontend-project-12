@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { logout } from './user.js'
+import { removeChannel } from './channels.js'
 
 const initialState = {
     entities: {},
@@ -26,6 +27,10 @@ const messagesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(logout, (state) => {
+            state.entities = {}
+            state.ids = []
+        }),
+        builder.addCase(removeChannel, (state) => {
             state.entities = {}
             state.ids = []
         })
