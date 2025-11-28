@@ -25,6 +25,7 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
     const formik = useFormik({
         initialValues: { name: '' },
         validationSchema: AddChannelSchema,
+        enableReinitialize: true, // пересоздаём initialValues при изменении
         onSubmit: async (value, { resetForm }) => {
             const newChannel = await addChannel(token, { name: value.name })
             dispatch(postNewChannel(newChannel))
@@ -34,11 +35,11 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
         }
     })
 
-    // Сбрасываем форму каждый раз при открытии модалки и устанавливаем фокус
+    // Ставим фокус при открытии модального окна
     useEffect(() => {
-        if (isOpen) {
-            inputRef.current.focus()
-            formik.resetForm()
+        if (isOpen && inputRef.current) {
+            // таймаут нужен, чтобы модальное окно успело отрендериться
+            setTimeout(() => inputRef.current.focus(), 0)
         }
     }, [isOpen])
 
