@@ -5,6 +5,8 @@ import { Form, InputGroup } from 'react-bootstrap'
 import { postMessage } from '../slices/messages.js'
 import addMessage from '../api/addMessage.js'
 import EnterButton from './EnterButton.jsx'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const MessageInputBlock = () => {
     const dispatch = useDispatch()
@@ -12,6 +14,7 @@ const MessageInputBlock = () => {
     const token = useSelector(state => state.user.token)
     const username = useSelector(state => state.user.username)
     const currentChannelId = useSelector(state => state.channels.currentChannelId)
+    const [ isDisabled, setIsDisabled ] = useState(false)
 
     useEffect(() => {
         inputRef.current.focus()
@@ -20,12 +23,18 @@ const MessageInputBlock = () => {
     const formik = useFormik({
         initialValues: { body: '' },
         onSubmit: async (values, { resetForm }) => {
-            if (values.body !== '') {
-                await addMessage(token, { body: values.body, channelId: currentChannelId, username })
-                    .then(message => {
-                        dispatch(postMessage(message))
-                        resetForm()
-                    })
+            setIsDisabled(true)
+            try {
+                if (values.body !== '') {
+                    const message = await addMessage(token, { body: values.body, channelId: currentChannelId, username })
+                    dispatch(postMessage(message))
+                    resetForm()
+                }
+            } catch {
+                resetForm()
+                toast('Ошибка соединения')
+            } finally {
+                setIsDisabled(false)
             }
         },
     })
@@ -42,7 +51,7 @@ const MessageInputBlock = () => {
                     onChange={formik.handleChange}
                     value={formik.values.body}
                 />
-                <EnterButton disabled={formik.values.body.trim() === ''}/>
+                <EnterButton disabled={isDisabled || formik.values.body.trim() === ''}/>
             </InputGroup>
         </Form>
   )

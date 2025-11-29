@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { useFormik } from 'formik'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import * as yup from 'yup'
 import { editChannel } from '../slices/channels.js'
 import editChannelRequest from '../api/removeChannelRequest.js'
+import { toast } from 'react-toastify'
 
 const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsOpenEditChannelForm }) => {
     const dispatch = useDispatch()
@@ -12,6 +13,7 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
     const token = useSelector(state => state.user.token)
     const channels = useSelector(state => state.channels.entities)
     const channelsNames = Object.values(channels).map(channel => channel.name)
+    const [ isDisabled, setIsDisabled ] = useState(false)
 
     useEffect(() => {
         if (isOpenEditChannelForm) {
@@ -33,10 +35,18 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
         enableReinitialize: true, // инициализируем форму каждый раз, когда initialValues изменяются
         validationSchema: EditChannelSchema,
         onSubmit: async (value, { resetForm }) => {
-            await editChannelRequest(token, channelId, value.name);
-            dispatch(editChannel({ id: channelId, newName: value.name} ))
-            resetForm()
-            setIsOpenEditChannelForm(false)
+            setIsDisabled(true)
+            try {
+                await editChannelRequest(token, channelId, value.name);
+                dispatch(editChannel({ id: channelId, newName: value.name} ))
+                resetForm()
+                setIsOpenEditChannelForm(false)
+                toast('Канал переименован')
+            } catch {
+                toast('Ошибка соединения')
+            } finally {
+                setIsDisabled(false)
+            }
         }
     })
 
@@ -64,7 +74,7 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
                         <Button variant="secondary" onClick={() => setIsOpenEditChannelForm(false)} className="me-2">
                             Отменить
                         </Button>
-                        <Button type="submit" variant="primary">Отправить</Button>
+                        <Button type="submit" disabled={isDisabled} variant="primary">Отправить</Button>
                     </div>
                 </Form>
             </Modal.Body>

@@ -1,11 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Button } from 'react-bootstrap'
+import { useState } from 'react'
 import { removeChannel } from '../slices/channels.js'
 import removeChannelRequest from '../api/removeChannelRequest.js'
+import { toast } from 'react-toastify'
 
 const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemoveChannelForm }) => {
     const dispatch = useDispatch()
     const token = useSelector(state => state.user.token)
+    const [ isDisabled, setIsDisabled ] = useState(false)
     return (
         <Modal show={isOpenRemoveChannelForm} onHide={() => setIsOpenRemoveChannelForm(false)} centered>
             <Modal.Header closeButton>
@@ -17,7 +20,24 @@ const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemove
                     <Button variant="secondary" onClick={() => setIsOpenRemoveChannelForm(false)} className="me-2">
                          Отменить
                     </Button>
-                    <Button type="submit" variant="danger" onClick={async () => { await removeChannelRequest(token, channelId); dispatch(removeChannel(channelId))}}>Удалить</Button>
+                    <Button 
+                        type="submit" 
+                        disabled={isDisabled}
+                        variant="danger" 
+                        onClick={async () => { 
+                                setIsDisabled(true)
+                                try {
+                                    await removeChannelRequest(token, channelId)
+                                    dispatch(removeChannel(channelId))
+                                    toast('Канал удалён')
+                                } catch {
+                                    toast('Ошибка соединения')
+                                } finally {
+                                    setIsDisabled(false)
+                                }
+                            }
+                        }
+                    >Удалить</Button>
                 </div>
             </Modal.Body>
         </Modal>

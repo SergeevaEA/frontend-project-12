@@ -6,12 +6,13 @@ import { login } from '../slices/user.js'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { useRef, useEffect } from 'react'
+import { useRef, useState } from 'react'
 
 const LoginForm = () => {
     const dispatch = useDispatch();
     const inputRef = useRef(null)
     const navigate = useNavigate();
+    const [ isDisabled, setIsDisabled ] = useState(false)
 
     const formik = useFormik({
         initialValues: {
@@ -19,15 +20,24 @@ const LoginForm = () => {
             password: '',
         },
         onSubmit: async (values) => {
-            loginRequest(values).then((data) => {
+            setIsDisabled(true)
+            try {
+                const data = await loginRequest(values)
                 const token = data.token;
                 const username = values.username;
                 localStorage.setItem('token', token);
                 localStorage.setItem('username', username);
                 dispatch(login({ username, token }));
                 navigate('/');
-              })
-            .catch(() => toast('Неверные имя пользователя или пароль'));
+            } catch (error) {
+              if (error.response.status === 401) {
+                    toast('Неверные имя пользователя или пароль');
+                } else {
+                    toast('Ошибка соединения')
+                }
+            } finally {
+                setIsDisabled(false)
+            }
         },
     });
 
@@ -66,7 +76,7 @@ const LoginForm = () => {
                     />
                     <Form.Label>Пароль</Form.Label>
                   </Form.Group>
-                  <Button type="submit" className="w-100 mb-3" variant="outline-primary">
+                  <Button type="submit" disabled={isDisabled} className="w-100 mb-3" variant="outline-primary">
                     Войти
                   </Button>
                 </Form>

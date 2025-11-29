@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login } from '../slices/user.js'
 import { useDispatch } from 'react-redux'
-import { useRef, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import * as yup from 'yup'
 import { Card, Form, Button } from 'react-bootstrap'
 import signupRequest from '../api/signupRequest.js'
@@ -19,6 +19,7 @@ const SignupForm = () => {
     const dispatch = useDispatch();
     const inputRef = useRef(null)
     const navigate = useNavigate();
+    const [ isDisabled, setIsDisabled ] = useState(false)
 
     const formik = useFormik({
         initialValues: {
@@ -28,20 +29,24 @@ const SignupForm = () => {
         },
         validationSchema: SignupSchema,
         onSubmit: async (values) => {
-        signupRequest(values)
-            .then((data) => {
+            setIsDisabled(true)
+            try {
+                const data = await signupRequest(values)
                 const token = data.token;
                 const username = values.username;
                 localStorage.setItem('token', token);
                 localStorage.setItem('username', username);
                 dispatch(login({ username, token }));
                 navigate('/');
-            })
-            .catch((error) => {
+            } catch (error) {
                 if (error.response.status === 409) {
                     toast('Пользователь с таким логином уже существует');
+                } else {
+                    toast('Ошибка соединения')
                 }
-            });
+            } finally {
+                setIsDisabled(false)
+            }
         },
     });
 
@@ -112,7 +117,7 @@ const SignupForm = () => {
                     <Form.Label>Подтвердите пароль</Form.Label>
                   </Form.Group>
 
-                  <Button type="submit" className="w-100" variant="outline-primary">
+                  <Button type="submit" disabled={isDisabled} className="w-100" variant="outline-primary">
                     Зарегистрироваться
                   </Button>
                 </Form>
