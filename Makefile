@@ -13,11 +13,13 @@ install: install-frontend install-root
 dev:
 	cd frontend && npm run dev
 
-# Запуск чат-сервера
-start:
-	npx start-server -s ./frontend/dist &   # запуск в фоне
-	npx wait-port 3000                      # ждём, пока порт 3000 станет доступен
+# Запуск чат-сервера для локальной разработки
+start-local:
+	npx start-server -s ./frontend/dist
 
+# Запуск сервера для продакшена
+start:
+	npx @hexlet/chat-server
 
 # Сборка проекта для продакшена
 build:
