@@ -10,6 +10,12 @@ import newChannelSubscribe from './api/newChannelSubscribe.js'
 import newMessagesSubscribe from './api/newMessagesSubscribe.js'
 import removeChannelSubscribe from './api/removeChannelSubscribe.js'
 import renameChannelSubscribe from './api/renameChannelSubscribe.js'
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react'
+
+const rollbarConfig = {
+  accessToken: 'fde1f8f1a9914a549ef681b99265e0c2',
+  environment: 'testenv',
+};
 
 const init = async () => {
   const i18n = i18next.createInstance();
@@ -28,12 +34,17 @@ const init = async () => {
     renameChannelSubscribe()
 
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <App />
-      </I18nextProvider>
-    </Provider>
-  );
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <TestError />
+        <Provider store={store}>
+          <I18nextProvider i18n={i18n}>
+            <App />
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
+  )
 };
 
 export default init;
