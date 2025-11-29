@@ -16,6 +16,7 @@ dev:
 # Запуск чат-сервера
 start:
 	npx start-server -s ./frontend/dist
+	sleep 5
 
 # Сборка проекта для продакшена
 build:
