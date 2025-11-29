@@ -1,17 +1,16 @@
 import { useFormik } from 'formik'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useRef, useEffect } from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
-import { postMessage } from '../slices/messages.js'
 import addMessage from '../api/addMessage.js'
 import EnterButton from './EnterButton.jsx'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
+import filter from '../profanityFilter.js'
 
 const MessageInputBlock = () => {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
     const inputRef = useRef(null)
     const token = useSelector(state => state.user.token)
     const username = useSelector(state => state.user.username)
@@ -28,8 +27,8 @@ const MessageInputBlock = () => {
             setIsDisabled(true)
             try {
                 if (values.body !== '') {
-                    const message = await addMessage(token, { body: values.body, channelId: currentChannelId, username })
-                    dispatch(postMessage(message))
+                    const text = filter.clean(values.body)
+                    await addMessage(token, { body: text, channelId: currentChannelId, username })
                     resetForm()
                 }
             } catch {

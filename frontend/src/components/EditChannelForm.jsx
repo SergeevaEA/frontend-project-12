@@ -1,16 +1,15 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { useFormik } from 'formik'
 import { useRef, useEffect, useState } from 'react'
 import * as yup from 'yup'
-import { editChannel } from '../slices/channels.js'
-import editChannelRequest from '../api/removeChannelRequest.js'
+import editChannelRequest from '../api/editChannelRequest.js'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
+import filter from '../profanityFilter.js'
 
 const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsOpenEditChannelForm }) => {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
     const inputRef = useRef(null)
     const token = useSelector(state => state.user.token)
     const channels = useSelector(state => state.channels.entities)
@@ -39,8 +38,8 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
         onSubmit: async (value, { resetForm }) => {
             setIsDisabled(true)
             try {
-                await editChannelRequest(token, channelId, value.name);
-                dispatch(editChannel({ id: channelId, newName: value.name} ))
+                const name = filter.clean(value.name)
+                await editChannelRequest(token, channelId, name);
                 resetForm()
                 setIsOpenEditChannelForm(false)
                 toast(t('success.channelEdited'))

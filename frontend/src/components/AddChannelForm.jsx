@@ -1,15 +1,14 @@
 import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 import addChannel from '../api/addChannel.js'
 import { useRef, useEffect, useState } from 'react'
-import { postNewChannel, setCurrentChannelId } from '../slices/channels.js';
 import * as yup from 'yup'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
+import filter from '../profanityFilter.js'
 
 const AddChannelForm = ({ isOpen, setIsOpen }) => {
-    const dispatch = useDispatch()
     const inputRef = useRef(null)
     const token = useSelector(state => state.user.token)
     const channels = useSelector(state => state.channels.entities)
@@ -31,9 +30,8 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
         onSubmit: async (value, { resetForm }) => {
             setIsDisabled(true)
             try {
-                const newChannel = await addChannel(token, { name: value.name })
-                dispatch(postNewChannel(newChannel))
-                dispatch(setCurrentChannelId(newChannel.id))
+                const name = filter.clean(value.name)
+                await addChannel(token, { name })
                 resetForm()
                 setIsOpen(false)
                 toast(t('success.channelCreated'))
@@ -79,7 +77,7 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
                     </Form.Group>
                     <div className="d-flex justify-content-end">
                         <Button variant="secondary" className="me-2" onClick={() => setIsOpen(false)}>
-                            {t('buttons.notSend')}
+                           {t('buttons.notSend')}
                         </Button>
                         <Button type="submit" disabled={isDisabled} variant="primary">{t('buttons.send')}</Button>
                     </div>

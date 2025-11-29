@@ -1,14 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Modal, Button } from 'react-bootstrap'
 import { useState } from 'react'
-import { removeChannel } from '../slices/channels.js'
 import removeChannelRequest from '../api/removeChannelRequest.js'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
 const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemoveChannelForm }) => {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
     const token = useSelector(state => state.user.token)
     const [ isDisabled, setIsDisabled ] = useState(false)
     return (
@@ -30,7 +28,6 @@ const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemove
                                 setIsDisabled(true)
                                 try {
                                     await removeChannelRequest(token, channelId)
-                                    dispatch(removeChannel(channelId))
                                     toast(t('success.channelRemoved'))
                                 } catch {
                                     toast(t('errors.networkError'))
