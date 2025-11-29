@@ -15,8 +15,9 @@ dev:
 
 # Запуск чат-сервера
 start:
-	npx start-server -s ./frontend/dist
-	sleep 5
+	npx start-server -s ./frontend/dist &   # запуск в фоне
+	npx wait-port 3000                      # ждём, пока порт 3000 станет доступен
+
 
 # Сборка проекта для продакшена
 build:
