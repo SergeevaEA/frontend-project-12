@@ -7,8 +7,10 @@ import addMessage from '../api/addMessage.js'
 import EnterButton from './EnterButton.jsx'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next';
 
 const MessageInputBlock = () => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const inputRef = useRef(null)
     const token = useSelector(state => state.user.token)
@@ -32,7 +34,7 @@ const MessageInputBlock = () => {
                 }
             } catch {
                 resetForm()
-                toast('Ошибка соединения')
+                toast(t('errors.networkError'))
             } finally {
                 setIsDisabled(false)
             }
@@ -46,7 +48,7 @@ const MessageInputBlock = () => {
                     name="body"
                     ref={inputRef}
                     aria-label="Новое сообщение"
-                    placeholder="Введите сообщение..."
+                    placeholder={t('writeMessage')}
                     className="border-0 p-0 ps-2"
                     onChange={formik.handleChange}
                     value={formik.values.body}

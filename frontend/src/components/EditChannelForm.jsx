@@ -6,8 +6,10 @@ import * as yup from 'yup'
 import { editChannel } from '../slices/channels.js'
 import editChannelRequest from '../api/removeChannelRequest.js'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next';
 
 const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsOpenEditChannelForm }) => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const inputRef = useRef(null)
     const token = useSelector(state => state.user.token)
@@ -24,10 +26,10 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
     const EditChannelSchema = yup.object().shape({
         name: yup
             .string()
-            .min(3, 'От 3 до 20 символов')
-            .max(20, 'От 3 до 20 символов')
-            .required('Обязательное поле')
-            .test('isUnique', 'Должно быть уникальным', value => value === channelName || !channelsNames.includes(value)),
+            .min(3, t('errors.eighteenSimbols'))
+            .max(20, t('errors.eighteenSimbols'))
+            .required(t('errors.required'))
+            .test('isUnique', t('errors.unique'), value => value === channelName || !channelsNames.includes(value)),
     })
 
     const formik = useFormik({
@@ -41,9 +43,9 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
                 dispatch(editChannel({ id: channelId, newName: value.name} ))
                 resetForm()
                 setIsOpenEditChannelForm(false)
-                toast('Канал переименован')
+                toast(t('success.channelEdited'))
             } catch {
-                toast('Ошибка соединения')
+                toast(t('errors.networkError'))
             } finally {
                 setIsDisabled(false)
             }
@@ -53,7 +55,7 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
     return (
         <Modal show={isOpenEditChannelForm} onHide={() => setIsOpenEditChannelForm(false)} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Переименовать канал</Modal.Title>
+                <Modal.Title>{t('editChannel')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
@@ -72,9 +74,9 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
                     </Form.Group>
                     <div className="d-flex justify-content-end">
                         <Button variant="secondary" onClick={() => setIsOpenEditChannelForm(false)} className="me-2">
-                            Отменить
+                            {t('buttons.notSend')}
                         </Button>
-                        <Button type="submit" disabled={isDisabled} variant="primary">Отправить</Button>
+                        <Button type="submit" disabled={isDisabled} variant="primary">{t('buttons.send')}</Button>
                     </div>
                 </Form>
             </Modal.Body>

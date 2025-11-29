@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next';
 
 const LoginForm = () => {
+  const { t } = useTranslation()
     const dispatch = useDispatch();
     const inputRef = useRef(null)
     const navigate = useNavigate();
@@ -31,9 +33,9 @@ const LoginForm = () => {
                 navigate('/');
             } catch (error) {
               if (error.response.status === 401) {
-                    toast('Неверные имя пользователя или пароль');
+                    toast(t('errors.usernameOrPasswordError'));
                 } else {
-                    toast('Ошибка соединения')
+                    toast(t('errors.networkError'))
                 }
             } finally {
                 setIsDisabled(false)
@@ -51,40 +53,40 @@ const LoginForm = () => {
                   <img src={avatar} className="rounded-circle" alt="Войти" />
                 </div>
                 <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-md-0">
-                  <h1 className="text-center mb-4">Войти</h1>
+                  <h1 className="text-center mb-4">{t('buttons.login')}</h1>
                   <Form.Group className="form-floating mb-3" controlId="username">
                     <Form.Control
                       name="username"
                       ref={inputRef}
                       autoFocus
                       type="text"
-                      placeholder="Ваш ник"
+                      placeholder={t('nik')}
                       required
                       onChange={formik.handleChange}
                       value={formik.values.username}
                     />
-                    <Form.Label>Ваш ник</Form.Label>
+                    <Form.Label>{t('nik')}</Form.Label>
                   </Form.Group>
                   <Form.Group className="form-floating mb-4" controlId="password">
                     <Form.Control
                       name="password"
                       type="password"
-                      placeholder="Пароль"
+                      placeholder={t('password')}
                       required
                       onChange={formik.handleChange}
                       value={formik.values.password}
                     />
-                    <Form.Label>Пароль</Form.Label>
+                    <Form.Label>{t('password')}</Form.Label>
                   </Form.Group>
                   <Button type="submit" disabled={isDisabled} className="w-100 mb-3" variant="outline-primary">
-                    Войти
+                    {t('buttons.login')}
                   </Button>
                 </Form>
               </Card.Body>
               <Card.Footer className="p-4">
                 <div className="text-center">
-                  <span>Нет аккаунта? </span>
-                  <a href="/signup">Регистрация</a>
+                  <span>{t('haveNotAccaunt')} </span>
+                  <a href="/signup">{t('registration')}</a>
                 </div>
               </Card.Footer>
             </Card>

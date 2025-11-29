@@ -8,6 +8,7 @@ import { useRef, useState } from 'react'
 import * as yup from 'yup'
 import { Card, Form, Button } from 'react-bootstrap'
 import signupRequest from '../api/signupRequest.js'
+import { useTranslation } from 'react-i18next';
 
 const SignupSchema = yup.object().shape({
     username: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
@@ -16,6 +17,7 @@ const SignupSchema = yup.object().shape({
 });
 
 const SignupForm = () => {
+    const { t } = useTranslation()
     const dispatch = useDispatch();
     const inputRef = useRef(null)
     const navigate = useNavigate();
@@ -40,9 +42,9 @@ const SignupForm = () => {
                 navigate('/');
             } catch (error) {
                 if (error.response.status === 409) {
-                    toast('Пользователь с таким логином уже существует');
+                    toast(t('errors.alreadyExists'));
                 } else {
-                    toast('Ошибка соединения')
+                    toast(t('errors.networkError'))
                 }
             } finally {
                 setIsDisabled(false)
@@ -60,7 +62,7 @@ const SignupForm = () => {
                   <img src={avatar} className="rounded-circle" alt="Регистрация" />
                 </div>
                 <Form onSubmit={formik.handleSubmit} className="w-50">
-                  <h1 className="text-center mb-4">Регистрация</h1>
+                  <h1 className="text-center mb-4">{t('registration')}</h1>
 
                   <Form.Group className="form-floating mb-3" controlId="username">
                     <Form.Control
@@ -78,13 +80,13 @@ const SignupForm = () => {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.username}
                     </Form.Control.Feedback>
-                    <Form.Label>Имя пользователя</Form.Label>
+                    <Form.Label>{t('username')}</Form.Label>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-3" controlId="password">
                     <Form.Control
                       name="password"
-                      placeholder="Не менее 6 символов"
+                      placeholder={t('errors.min6Simbols')}
                       type="password"
                       autoComplete="new-password"
                       required
@@ -96,13 +98,13 @@ const SignupForm = () => {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.password}
                     </Form.Control.Feedback>
-                    <Form.Label>Пароль</Form.Label>
+                    <Form.Label>{t('password')}</Form.Label>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-4" controlId="confirmPassword">
                     <Form.Control
                       name="confirmPassword"
-                      placeholder="Пароли должны совпадать"
+                      placeholder={t('errors.samePasswords')}
                       type="password"
                       autoComplete="new-password"
                       required
@@ -114,11 +116,11 @@ const SignupForm = () => {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.confirmPassword}
                     </Form.Control.Feedback>
-                    <Form.Label>Подтвердите пароль</Form.Label>
+                    <Form.Label>{t('confirmPassword')}</Form.Label>
                   </Form.Group>
 
                   <Button type="submit" disabled={isDisabled} className="w-100" variant="outline-primary">
-                    Зарегистрироваться
+                    {t('buttons.signup')}
                   </Button>
                 </Form>
               </Card.Body>

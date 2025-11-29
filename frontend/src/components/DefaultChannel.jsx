@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux"
 import { setCurrentChannelId } from "../slices/channels"
 import { Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next';
 
 const DefaultChannel = ({ channelName, channelId }) => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const currentChannelId = useSelector(state => state.channels.currentChannelId)
     const isCurrent = (channelId === currentChannelId) ? true : false
@@ -16,7 +18,7 @@ const DefaultChannel = ({ channelName, channelId }) => {
                 variant={isCurrent ? 'secondary' : 'light'}
                 onClick={handleClick} 
             >
-                <span className="me-1">#</span>{channelName}
+                <span className="me-1">{t('hash')}</span>{channelName}
             </Button>
         </li>
     )

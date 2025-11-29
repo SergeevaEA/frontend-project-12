@@ -4,8 +4,10 @@ import { Dropdown, ButtonGroup, Button } from "react-bootstrap";
 import { setCurrentChannelId } from "../slices/channels";
 import RemoveChannelForm from './RemoveChannelForm.jsx'
 import EditChannelForm from "./EditChannelForm.jsx";
+import { useTranslation } from 'react-i18next';
 
 const UserChannel = ({ channelName, channelId }) => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const isCurrent = channelId === currentChannelId
@@ -25,16 +27,16 @@ const UserChannel = ({ channelName, channelId }) => {
           variant={isCurrent ? "secondary" : "light"}
           onClick={handleClick}
         >
-          <span className="me-1 text-truncate">#</span>{channelName}
+          <span className="me-1 text-truncate">{t('hash')}</span>{channelName}
         </Button>
 
         <Dropdown.Toggle split variant={isCurrent ? "secondary" : "light"} />
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => setIsOpenRemoveChannelForm(true)} as="button">
-            Удалить
+            {t('buttons.remove')}
           </Dropdown.Item>
           <Dropdown.Item onClick={() => setIsOpenEditChannelForm(true)} as="button">
-            Переименовать
+            {t('buttons.edit')}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

@@ -1,1 +1,45 @@
-export default {};
+import addChannel from "../api/addChannel";
+
+export default {
+    translation: {
+        hexletChat: 'Hexlet Chat',
+        haveNotAccaunt: 'Нет аккаунта?',
+        nik: 'Ваш ник',
+        username: 'Имя пользователя',
+        password: 'Пароль',
+        confirmPassword: 'Подтвердите пароль',
+        writeMessage: 'Введите сообщение...',
+        addChannel: 'Добавить канал',
+        channelName: 'Имя канала',
+        editChannel: 'Переименовать канал',
+        removeChannel: 'Удалить канал',
+        areYouSure: 'Уверены?',
+        registration: 'Регистрация',
+        hash: '#',
+        buttons: {
+            login: 'Войти',
+            logout: 'Выйти',
+            signup: 'Зарегистрироваться',
+            send: 'Отправить',
+            notSend: 'Отменить',
+            edit: 'Переименовать',
+            remove: 'Удалить',
+            plus: '+',
+        },
+        errors: {
+            usernameOrPasswordError: 'Неверные имя пользователя или пароль',
+            alreadyExists: 'Пользователь с таким логином уже существует',
+            eighteenSimbols: 'От 3 до 20 символов',
+            min6Simbols: 'Не менее 6 символов',
+            samePasswords: 'Пароли должны совпадать',
+            networkError: 'Ошибка соединения',
+            unique: 'Должно быть уникальным',
+            required: 'Обязательное поле',
+        },
+        success: {
+            channelCreated: 'Канал создан',
+            channelEdited: 'Канал переименован',
+            channelRemoved: 'Канал удалён',
+        },
+    }
+};

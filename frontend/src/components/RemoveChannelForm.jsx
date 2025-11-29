@@ -4,21 +4,23 @@ import { useState } from 'react'
 import { removeChannel } from '../slices/channels.js'
 import removeChannelRequest from '../api/removeChannelRequest.js'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next';
 
 const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemoveChannelForm }) => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const token = useSelector(state => state.user.token)
     const [ isDisabled, setIsDisabled ] = useState(false)
     return (
         <Modal show={isOpenRemoveChannelForm} onHide={() => setIsOpenRemoveChannelForm(false)} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Удалить канал</Modal.Title>
+                <Modal.Title>{t('removeChannel')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p className="lead">Уверены?</p>
+                <p className="lead">{t('areYouSure')}</p>
                 <div className="d-flex justify-content-end">
                     <Button variant="secondary" onClick={() => setIsOpenRemoveChannelForm(false)} className="me-2">
-                         Отменить
+                        {t('buttons.notSend')}
                     </Button>
                     <Button 
                         type="submit" 
@@ -29,15 +31,15 @@ const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemove
                                 try {
                                     await removeChannelRequest(token, channelId)
                                     dispatch(removeChannel(channelId))
-                                    toast('Канал удалён')
+                                    toast(t('success.channelRemoved'))
                                 } catch {
-                                    toast('Ошибка соединения')
+                                    toast(t('errors.networkError'))
                                 } finally {
                                     setIsDisabled(false)
                                 }
                             }
                         }
-                    >Удалить</Button>
+                    >{t('buttons.remove')}</Button>
                 </div>
             </Modal.Body>
         </Modal>
