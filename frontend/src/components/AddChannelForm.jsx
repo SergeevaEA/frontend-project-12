@@ -69,8 +69,8 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
                             onChange={formik.handleChange}
                             value={formik.values.name}
                             isInvalid={formik.touched.name && !!formik.errors.name}
-                            placeholder={t('channelName')}
                         />
+                        <Form.Label>{t('channelName')}</Form.Label>
                         <Form.Control.Feedback type="invalid">
                             {formik.errors.name}
                         </Form.Control.Feedback>
