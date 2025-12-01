@@ -19,5 +19,6 @@ make install
 ## Development
 
 ```bash
-make develop
+make dev
+make start
 ```

@@ -67,7 +67,7 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
                             value={formik.values.name}
                             isInvalid={formik.touched.name && !!formik.errors.name}
                         />
-                        <Form.Label>{t('controlChannel')}</Form.Label>
+                        <Form.Label>{t('channelName')}</Form.Label>
                         <Form.Control.Feedback type="invalid">
                             {formik.errors.name}
                         </Form.Control.Feedback>
