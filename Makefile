@@ -1,25 +1,21 @@
-# Установка зависимостей фронтенда
-install-frontend:
-	cd frontend && npm ci
-
 # Установка зависимостей корня (если есть)
 install-root:
 	npm ci
 
+# Установка зависимостей фронтенда
+install-frontend:
+	cd frontend && npm ci
+
 # Установка всех зависимостей сразу
-install: install-frontend install-root
+install: install-root install-frontend
 
 # Запуск dev-сервера фронтенда
 dev:
 	cd frontend && npm run dev
 
-# Запуск чат-сервера для локальной разработки
-start-local:
-	npx start-server -s ./frontend/dist
-
-# Запуск сервера для продакшена
+# Запуск чат-сервера
 start:
-	npx @hexlet/chat-server
+	npx start-server -s ./frontend/dist
 
 # Сборка проекта для продакшена
 build:
