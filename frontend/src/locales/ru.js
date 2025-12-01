@@ -1,5 +1,3 @@
-import addChannel from "../api/addChannel";
-
 export default {
     translation: {
         hexletChat: 'Hexlet Chat',
@@ -11,6 +9,7 @@ export default {
         writeMessage: 'Введите сообщение...',
         addChannel: 'Добавить канал',
         channelName: 'Имя канала',
+        controlChannel: 'Управление каналом',
         editChannel: 'Переименовать канал',
         removeChannel: 'Удалить канал',
         areYouSure: 'Уверены?',
