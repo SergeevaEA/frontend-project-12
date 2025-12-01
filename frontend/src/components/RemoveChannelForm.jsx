@@ -36,10 +36,7 @@ const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemove
                                 }
                             }
                         }
-                    >   
-                        {t('buttons.remove')}
-                        <span className="visually-hidden">{t('buttons.remove')}</span>
-                    </Button>
+                    >{t('buttons.remove')}</Button>
                 </div>
             </Modal.Body>
         </Modal>

@@ -75,9 +75,7 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
                         <Button variant="secondary" onClick={() => setIsOpenEditChannelForm(false)} className="me-2">
                             {t('buttons.notSend')}
                         </Button>
-                        <Button type="submit" disabled={isDisabled} variant="primary">{t('buttons.send')}
-                            <span className="visually-hidden">{t('buttons.edit')}</span>
-                        </Button>
+                        <Button type="submit" disabled={isDisabled} variant="primary">{t('buttons.send')}</Button>
                     </div>
                 </Form>
             </Modal.Body>
