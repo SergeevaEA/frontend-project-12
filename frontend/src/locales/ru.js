@@ -28,7 +28,7 @@ export default {
         },
         errors: {
             usernameOrPasswordError: 'Неверные имя пользователя или пароль',
-            alreadyExists: 'Пользователь с таким логином уже существует',
+            alreadyExists: 'Такой пользователь уже существует',
             eighteenSimbols: 'От 3 до 20 символов',
             min6Simbols: 'Не менее 6 символов',
             samePasswords: 'Пароли должны совпадать',
