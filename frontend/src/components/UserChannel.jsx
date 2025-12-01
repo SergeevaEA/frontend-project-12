@@ -28,7 +28,7 @@ const UserChannel = ({ channelName, channelId }) => {
           onClick={handleClick}
         >
           <span className="me-1 text-truncate">{t('hash')}</span>{channelName}
-          <span class="visually-hidden">Управление каналом</span>
+          <span class="visually-hidden">{t('conntrolChannel')}</span>
         </Button>
 
         <Dropdown.Toggle split variant={isCurrent ? "secondary" : "light"} />

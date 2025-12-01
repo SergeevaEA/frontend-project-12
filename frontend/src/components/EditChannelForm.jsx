@@ -67,7 +67,6 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
                             value={formik.values.name}
                             isInvalid={formik.touched.name && !!formik.errors.name}
                         />
-                        <Form.Label>{t('channelName')}</Form.Label>
                         <Form.Control.Feedback type="invalid">
                             {formik.errors.name}
                         </Form.Control.Feedback>
@@ -76,7 +75,9 @@ const EditChannelForm = ({ channelId, channelName, isOpenEditChannelForm, setIsO
                         <Button variant="secondary" onClick={() => setIsOpenEditChannelForm(false)} className="me-2">
                             {t('buttons.notSend')}
                         </Button>
-                        <Button type="submit" disabled={isDisabled} variant="primary">{t('buttons.send')}</Button>
+                        <Button type="submit" disabled={isDisabled} variant="primary">{t('buttons.send')}
+                            <span className="visually-hidden">{t('buttons.edit')}</span>
+                        </Button>
                     </div>
                 </Form>
             </Modal.Body>
