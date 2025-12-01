@@ -32,12 +32,14 @@ const UserChannel = ({ channelName, channelId }) => {
         </Button>
 
         <Dropdown.Toggle split variant={isCurrent ? "secondary" : "light"} />
-        <Dropdown.Menu renderMenuOnMount={true}>
+        <Dropdown.Menu>
           <Dropdown.Item onClick={() => setIsOpenRemoveChannelForm(true)} as="button">
             {t('buttons.remove')}
+            <span className="visually-hidden">{t('buttons.remove')}</span>
           </Dropdown.Item>
           <Dropdown.Item onClick={() => setIsOpenEditChannelForm(true)} as="button">
             {t('buttons.edit')}
+            <span className="visually-hidden">{t('buttons.edit')}</span>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
