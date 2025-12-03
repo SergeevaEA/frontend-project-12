@@ -30,7 +30,7 @@ const UserChannel = ({ channelName, channelId }) => {
           <span className="me-1 text-truncate">{t('hash')}</span>{channelName}
         </Button>
         <Dropdown.Toggle split variant={isCurrent ? "secondary" : "light"}>
-          <span class="visually-hidden">{t('controlChannel')}</span>
+          <span className="visually-hidden">{t('controlChannel')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu renderMenuOnMount={true}>
           <Dropdown.Item onClick={() => setIsOpenRemoveChannelForm(true)} as="button">

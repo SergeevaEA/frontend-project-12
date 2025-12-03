@@ -80,7 +80,7 @@ const SignupForm = () => {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.username}
                     </Form.Control.Feedback>
-                    <Form.Label>{t('username')}</Form.Label>
+                    <Form.Label className="visually-hidden">{t('username')}</Form.Label>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-3" controlId="password">
@@ -98,7 +98,7 @@ const SignupForm = () => {
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.password}
                     </Form.Control.Feedback>
-                    <Form.Label>{t('password')}</Form.Label>
+                    <Form.Label className="visually-hidden">{t('password')}</Form.Label>
                   </Form.Group>
 
                   <Form.Group className="form-floating mb-4" controlId="confirmPassword">
