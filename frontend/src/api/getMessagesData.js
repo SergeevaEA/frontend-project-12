@@ -6,7 +6,8 @@ const getMessages = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return response.data; // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin' }, ...]
+  return response.data;
+  // =>[{ id: '1', body: 'text message', channelId: '1', username: 'admin' }, ...]
 };
 
 export default getMessages;

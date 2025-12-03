@@ -4,7 +4,7 @@ install-root:
 
 # Установка зависимостей фронтенда
 install-frontend:
-	cd frontend && npm ci
+	cd frontend && npm ci --legacy-peer-deps
 
 # Установка всех зависимостей сразу
 install: install-root install-frontend
