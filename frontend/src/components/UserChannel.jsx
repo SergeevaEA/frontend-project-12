@@ -1,22 +1,22 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from 'react'
-import { Dropdown, ButtonGroup, Button } from "react-bootstrap";
-import { setCurrentChannelId } from "../slices/channels";
-import RemoveChannelForm from './RemoveChannelForm.jsx'
-import EditChannelForm from "./EditChannelForm.jsx";
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { setCurrentChannelId } from '../slices/channels';
+import RemoveChannelForm from './RemoveChannelForm.jsx';
+import EditChannelForm from './EditChannelForm.jsx';
 
 const UserChannel = ({ channelName, channelId }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const currentChannelId = useSelector(state => state.channels.currentChannelId)
-  const isCurrent = channelId === currentChannelId
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const isCurrent = channelId === currentChannelId;
 
-  const [ isOpenRemoveChannelForm, setIsOpenRemoveChannelForm ] = useState(false)
-  const [ isOpenEditChannelForm, setIsOpenEditChannelForm ] = useState(false)
+  const [isOpenRemoveChannelForm, setIsOpenRemoveChannelForm] = useState(false);
+  const [isOpenEditChannelForm, setIsOpenEditChannelForm] = useState(false);
 
   const handleClick = () => {
-    dispatch(setCurrentChannelId(channelId))
+    dispatch(setCurrentChannelId(channelId));
   };
 
   return (
@@ -24,15 +24,16 @@ const UserChannel = ({ channelName, channelId }) => {
       <Dropdown as={ButtonGroup} className="d-flex w-100">
         <Button
           className="w-100 text-start text-truncate rounded-0"
-          variant={isCurrent ? "secondary" : "light"}
+          variant={isCurrent ? 'secondary' : 'light'}
           onClick={handleClick}
         >
-          <span className="me-1 text-truncate">{t('hash')}</span>{channelName}
+          <span className="me-1 text-truncate">{t('hash')}</span>
+          {channelName}
         </Button>
-        <Dropdown.Toggle split variant={isCurrent ? "secondary" : "light"}>
+        <Dropdown.Toggle split variant={isCurrent ? 'secondary' : 'light'}>
           <span className="visually-hidden">{t('controlChannel')}</span>
         </Dropdown.Toggle>
-        <Dropdown.Menu renderMenuOnMount={true}>
+        <Dropdown.Menu renderMenuOnMount>
           <Dropdown.Item onClick={() => setIsOpenRemoveChannelForm(true)} as="button">
             {t('buttons.remove')}
             <span className="visually-hidden">{t('buttons.remove')}</span>
@@ -43,8 +44,17 @@ const UserChannel = ({ channelName, channelId }) => {
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <RemoveChannelForm channelId={channelId} isOpenRemoveChannelForm={isOpenRemoveChannelForm} setIsOpenRemoveChannelForm={setIsOpenRemoveChannelForm} />
-      <EditChannelForm channelId={channelId} channelName={channelName} isOpenEditChannelForm={isOpenEditChannelForm} setIsOpenEditChannelForm={setIsOpenEditChannelForm}/>
+      <RemoveChannelForm
+        channelId={channelId}
+        isOpenRemoveChannelForm={isOpenRemoveChannelForm}
+        setIsOpenRemoveChannelForm={setIsOpenRemoveChannelForm}
+      />
+      <EditChannelForm
+        channelId={channelId}
+        channelName={channelName}
+        isOpenEditChannelForm={isOpenEditChannelForm}
+        setIsOpenEditChannelForm={setIsOpenEditChannelForm}
+      />
     </li>
   );
 };

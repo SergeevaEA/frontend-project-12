@@ -1,134 +1,131 @@
-import { useFormik } from 'formik'
-import avatar from '../assets/avatar_1.jpg'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { login } from '../slices/user.js'
-import { useDispatch } from 'react-redux'
-import { useRef, useState } from 'react'
-import * as yup from 'yup'
-import { Card, Form, Button } from 'react-bootstrap'
-import signupRequest from '../api/signupRequest.js'
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { useRef, useState } from 'react';
+import * as yup from 'yup';
+import { Card, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import signupRequest from '../api/signupRequest.js';
+import { login } from '../slices/user.js';
+import avatar from '../assets/avatar_1.jpg';
 
 const SignupSchema = yup.object().shape({
-    username: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
-    password: yup.string().min(6, 'Не менее 6 символов').required('Обязательное поле'),
-    confirmPassword: yup.string().oneOf([yup.ref('password')], 'Пароли должны совпадать').required('Обязательное поле'),
+  username: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
+  password: yup.string().min(6, 'Не менее 6 символов').required('Обязательное поле'),
+  confirmPassword: yup.string().oneOf([yup.ref('password')], 'Пароли должны совпадать').required('Обязательное поле'),
 });
 
 const SignupForm = () => {
-    const { t } = useTranslation()
-    const dispatch = useDispatch();
-    const inputRef = useRef(null)
-    const navigate = useNavigate();
-    const [ isDisabled, setIsDisabled ] = useState(false)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const inputRef = useRef(null);
+  const navigate = useNavigate();
+  const [isDisabled, setIsDisabled] = useState(false);
 
-    const formik = useFormik({
-        initialValues: {
-            username: '',
-            password: '',
-            confirmPassword: '',
-        },
-        validationSchema: SignupSchema,
-        onSubmit: async (values) => {
-            setIsDisabled(true)
-            try {
-                const data = await signupRequest(values)
-                const token = data.token;
-                const username = values.username;
-                localStorage.setItem('token', token);
-                localStorage.setItem('username', username);
-                dispatch(login({ username, token }));
-                navigate('/');
-            } catch (error) {
-                if (error.response.status === 409) {
-                    toast(t('errors.alreadyExists'));
-                } else {
-                    toast(t('errors.networkError'))
-                }
-            } finally {
-                setIsDisabled(false)
-            }
-        },
-    });
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: SignupSchema,
+    onSubmit: async (values) => {
+      setIsDisabled(true);
+      try {
+        const data = await signupRequest(values);
+        const { token } = data;
+        const { username } = values;
+        localStorage.setItem('token', token);
+        localStorage.setItem('username', username);
+        dispatch(login({ username, token }));
+        navigate('/');
+      } catch (error) {
+        const handle = () => ((error.response.status === 409) ? toast(t('errors.alreadyExists')) : toast(t('errors.networkError')));
+        handle();
+      } finally {
+        setIsDisabled(false);
+      }
+    },
+  });
 
-    return (
-      <div className="container-fluid h-100">
-        <div className="row justify-content-center align-content-center h-100">
-          <div className="col-12 col-md-8 col-xxl-6">
-            <Card className="shadow-sm">
-              <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-                <div>
-                  <img src={avatar} className="rounded-circle" alt="Регистрация" />
-                </div>
-                <Form onSubmit={formik.handleSubmit} className="w-50">
-                  <h1 className="text-center mb-4">{t('registration')}</h1>
+  return (
+    <div className="container-fluid h-100">
+      <div className="row justify-content-center align-content-center h-100">
+        <div className="col-12 col-md-8 col-xxl-6">
+          <Card className="shadow-sm">
+            <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
+              <div>
+                <img src={avatar} className="rounded-circle" alt="Регистрация" />
+              </div>
+              <Form onSubmit={formik.handleSubmit} className="w-50">
+                <h1 className="text-center mb-4">{t('registration')}</h1>
 
-                  <Form.Group className="form-floating mb-3" controlId="username">
-                    <Form.Control
-                      name="username"
-                      ref={inputRef}
-                      autoFocus
-                      placeholder="От 3 до 20 символов"
-                      autoComplete="username"
-                      required
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.username}
-                      isInvalid={formik.touched.username && !!formik.errors.username}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.username}
-                    </Form.Control.Feedback>
-                    <Form.Label>{t('username')}</Form.Label>
-                  </Form.Group>
+                <Form.Group className="form-floating mb-3" controlId="username">
+                  <Form.Control
+                    name="username"
+                    ref={inputRef}
+                    autoFocus
+                    placeholder="От 3 до 20 символов"
+                    autoComplete="username"
+                    required
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
+                    isInvalid={formik.touched.username && !!formik.errors.username}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.username}
+                  </Form.Control.Feedback>
+                  <Form.Label>{t('username')}</Form.Label>
+                </Form.Group>
 
-                  <Form.Group className="form-floating mb-3" controlId="password">
-                    <Form.Control
-                      name="password"
-                      placeholder={t('errors.min6Simbols')}
-                      type="password"
-                      autoComplete="new-password"
-                      required
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                      isInvalid={formik.touched.password && !!formik.errors.password}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.password}
-                    </Form.Control.Feedback>
-                    <Form.Label>{t('password')}</Form.Label>
-                  </Form.Group>
+                <Form.Group className="form-floating mb-3" controlId="password">
+                  <Form.Control
+                    name="password"
+                    placeholder={t('errors.min6Simbols')}
+                    type="password"
+                    autoComplete="new-password"
+                    required
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    isInvalid={formik.touched.password && !!formik.errors.password}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.password}
+                  </Form.Control.Feedback>
+                  <Form.Label>{t('password')}</Form.Label>
+                </Form.Group>
 
-                  <Form.Group className="form-floating mb-4" controlId="confirmPassword">
-                    <Form.Control
-                      name="confirmPassword"
-                      placeholder={t('errors.samePasswords')}
-                      type="password"
-                      autoComplete="new-password"
-                      required
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.confirmPassword}
-                      isInvalid={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.confirmPassword}
-                    </Form.Control.Feedback>
-                    <Form.Label>{t('confirmPassword')}</Form.Label>
-                  </Form.Group>
+                <Form.Group className="form-floating mb-4" controlId="confirmPassword">
+                  <Form.Control
+                    name="confirmPassword"
+                    placeholder={t('errors.samePasswords')}
+                    type="password"
+                    autoComplete="new-password"
+                    required
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.confirmPassword}
+                    isInvalid={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.confirmPassword}
+                  </Form.Control.Feedback>
+                  <Form.Label>{t('confirmPassword')}</Form.Label>
+                </Form.Group>
 
-                  <Button type="submit" disabled={isDisabled} className="w-100" variant="outline-primary">
-                    {t('buttons.signup')}
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Card>
-          </div>
+                <Button type="submit" disabled={isDisabled} className="w-100" variant="outline-primary">
+                  {t('buttons.signup')}
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default SignupForm;
