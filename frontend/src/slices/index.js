@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './user.js';
 import channelsReducer from './channels.js';

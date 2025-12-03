@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import { logout } from './user.js';
 import { removeChannel } from './channels.js';
@@ -29,7 +30,7 @@ const messagesSlice = createSlice({
     builder.addCase(logout, (state) => {
       state.entities = {};
       state.ids = [];
-    }),
+    });
     builder.addCase(removeChannel, (state) => {
       state.entities = {};
       state.ids = [];
