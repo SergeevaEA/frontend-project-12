@@ -6,7 +6,6 @@ const newChannelSubscribe = () => {
   // subscribe new channel
   socket.on('newChannel', (payload) => {  // получили от сервера: { id: 6, name: "new channel", removable: true }
     store.dispatch(postNewChannel(payload))
-    store.dispatch(setCurrentChannelId(payload.id))
   });
 }
 

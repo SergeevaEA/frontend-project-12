@@ -7,6 +7,8 @@ import { Modal, Button, Form } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import filter from '../profanityFilter.js'
+import { useDispatch } from 'react-redux'
+import { setCurrentChannelId } from '../slices/channels.js'
 
 const AddChannelForm = ({ isOpen, setIsOpen }) => {
     const inputRef = useRef(null)
@@ -15,6 +17,7 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
     const channelsNames = Object.values(channels).map(channel => channel.name)
     const [ isDisabled, setIsDisabled ] = useState(false)
     const { t } = useTranslation()
+    const dispatch = useDispatch()
 
     const AddChannelSchema = yup.object().shape({
         name: yup
@@ -31,7 +34,8 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
             setIsDisabled(true)
             try {
                 const name = filter.clean(value.name)
-                await addChannel(token, { name })
+                const newChannel = await addChannel(token, { name })
+                dispatch(setCurrentChannelId(newChannel.id))
                 resetForm()
                 setIsOpen(false)
                 toast(t('success.channelCreated'))
