@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const addChannel = async (token, newChannel) => {
   // Example: newChannel = { name: 'new channel' }
@@ -6,8 +6,8 @@ const addChannel = async (token, newChannel) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
-  return response.data; // => { id: '3', name: 'new channel', removable: true }
-};
+  })
+  return response.data // => { id: '3', name: 'new channel', removable: true }
+}
 
-export default addChannel;
+export default addChannel

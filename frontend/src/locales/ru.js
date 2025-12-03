@@ -41,4 +41,4 @@ export default {
       channelRemoved: 'Канал удалён',
     },
   },
-};
+}

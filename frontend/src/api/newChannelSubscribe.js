@@ -1,12 +1,12 @@
-import { postNewChannel } from '../slices/channels.js';
-import socket from '../socket.js';
-import store from '../slices/index.js';
+import { postNewChannel } from '../slices/channels.js'
+import socket from '../socket.js'
+import store from '../slices/index.js'
 
 const newChannelSubscribe = () => {
   // subscribe new channel
   socket.on('newChannel', (payload) => { // получили от сервера: { id: 6, name: "new channel", removable: true }
-    store.dispatch(postNewChannel(payload));
-  });
-};
+    store.dispatch(postNewChannel(payload))
+  })
+}
 
-export default newChannelSubscribe;
+export default newChannelSubscribe

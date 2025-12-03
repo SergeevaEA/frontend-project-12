@@ -1,14 +1,14 @@
-import { useSelector } from 'react-redux';
-import { Modal, Button } from 'react-bootstrap';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
-import removeChannelRequest from '../api/removeChannelRequest.js';
+import { useSelector } from 'react-redux'
+import { Modal, Button } from 'react-bootstrap'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
+import removeChannelRequest from '../api/removeChannelRequest.js'
 
 const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemoveChannelForm }) => {
-  const { t } = useTranslation();
-  const token = useSelector((state) => state.user.token);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const { t } = useTranslation()
+  const token = useSelector((state) => state.user.token)
+  const [isDisabled, setIsDisabled] = useState(false)
   return (
     <Modal show={isOpenRemoveChannelForm} onHide={() => setIsOpenRemoveChannelForm(false)} centered>
       <Modal.Header closeButton>
@@ -25,14 +25,14 @@ const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemove
             disabled={isDisabled}
             variant="danger"
             onClick={async () => {
-              setIsDisabled(true);
+              setIsDisabled(true)
               try {
-                await removeChannelRequest(token, channelId);
-                toast(t('success.channelRemoved'));
+                await removeChannelRequest(token, channelId)
+                toast(t('success.channelRemoved'))
               } catch {
-                toast(t('errors.networkError'));
+                toast(t('errors.networkError'))
               } finally {
-                setIsDisabled(false);
+                setIsDisabled(false)
               }
             }}
           >
@@ -41,7 +41,7 @@ const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemove
         </div>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default RemoveChannelForm;
+export default RemoveChannelForm

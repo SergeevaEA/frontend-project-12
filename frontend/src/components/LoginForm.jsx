@@ -1,20 +1,20 @@
-import { Card, Form, Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { login } from '../slices/user.js';
-import loginRequest from '../api/loginRequest.js';
-import avatar from '../assets/avatar.jpg';
+import { Card, Form, Button } from 'react-bootstrap'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { login } from '../slices/user.js'
+import loginRequest from '../api/loginRequest.js'
+import avatar from '../assets/avatar.jpg'
 
 const LoginForm = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const inputRef = useRef(null);
-  const navigate = useNavigate();
-  const [isDisabled, setIsDisabled] = useState(false);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const inputRef = useRef(null)
+  const navigate = useNavigate()
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -22,23 +22,23 @@ const LoginForm = () => {
       password: '',
     },
     onSubmit: async (values) => {
-      setIsDisabled(true);
+      setIsDisabled(true)
       try {
-        const data = await loginRequest(values);
-        const { token } = data;
-        const { username } = values;
-        localStorage.setItem('token', token);
-        localStorage.setItem('username', username);
-        dispatch(login({ username, token }));
-        navigate('/');
+        const data = await loginRequest(values)
+        const { token } = data
+        const { username } = values
+        localStorage.setItem('token', token)
+        localStorage.setItem('username', username)
+        dispatch(login({ username, token }))
+        navigate('/')
       } catch (error) {
-        const handle = () => ((error.response.status === 401) ? toast(t('errors.usernameOrPasswordError')) : toast(t('errors.networkError')));
-        handle();
+        const handle = () => ((error.response.status === 401) ? toast(t('errors.usernameOrPasswordError')) : toast(t('errors.networkError')))
+        handle()
       } finally {
-        setIsDisabled(false);
+        setIsDisabled(false)
       }
     },
-  });
+  })
 
   return (
     <div className="container-fluid h-100">
@@ -93,7 +93,7 @@ const LoginForm = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

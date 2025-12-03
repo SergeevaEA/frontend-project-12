@@ -1,27 +1,27 @@
-import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { useRef, useState } from 'react';
-import * as yup from 'yup';
-import { Card, Form, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import signupRequest from '../api/signupRequest.js';
-import { login } from '../slices/user.js';
-import avatar from '../assets/avatar_1.jpg';
+import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { useRef, useState } from 'react'
+import * as yup from 'yup'
+import { Card, Form, Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
+import signupRequest from '../api/signupRequest.js'
+import { login } from '../slices/user.js'
+import avatar from '../assets/avatar_1.jpg'
 
 const SignupSchema = yup.object().shape({
   username: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
   password: yup.string().min(6, 'Не менее 6 символов').required('Обязательное поле'),
   confirmPassword: yup.string().oneOf([yup.ref('password')], 'Пароли должны совпадать').required('Обязательное поле'),
-});
+})
 
 const SignupForm = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const inputRef = useRef(null);
-  const navigate = useNavigate();
-  const [isDisabled, setIsDisabled] = useState(false);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const inputRef = useRef(null)
+  const navigate = useNavigate()
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -31,23 +31,23 @@ const SignupForm = () => {
     },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
-      setIsDisabled(true);
+      setIsDisabled(true)
       try {
-        const data = await signupRequest(values);
-        const { token } = data;
-        const { username } = values;
-        localStorage.setItem('token', token);
-        localStorage.setItem('username', username);
-        dispatch(login({ username, token }));
-        navigate('/');
+        const data = await signupRequest(values)
+        const { token } = data
+        const { username } = values
+        localStorage.setItem('token', token)
+        localStorage.setItem('username', username)
+        dispatch(login({ username, token }))
+        navigate('/')
       } catch (error) {
-        const handle = () => ((error.response.status === 409) ? toast(t('errors.alreadyExists')) : toast(t('errors.networkError')));
-        handle();
+        const handle = () => ((error.response.status === 409) ? toast(t('errors.alreadyExists')) : toast(t('errors.networkError')))
+        handle()
       } finally {
-        setIsDisabled(false);
+        setIsDisabled(false)
       }
     },
-  });
+  })
 
   return (
     <div className="container-fluid h-100">
@@ -125,7 +125,7 @@ const SignupForm = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignupForm;
+export default SignupForm

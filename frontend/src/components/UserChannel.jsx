@@ -1,23 +1,23 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import { setCurrentChannelId } from '../slices/channels';
-import RemoveChannelForm from './RemoveChannelForm.jsx';
-import EditChannelForm from './EditChannelForm.jsx';
+import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { Dropdown, ButtonGroup, Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
+import { setCurrentChannelId } from '../slices/channels'
+import RemoveChannelForm from './RemoveChannelForm.jsx'
+import EditChannelForm from './EditChannelForm.jsx'
 
 const UserChannel = ({ channelName, channelId }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const isCurrent = channelId === currentChannelId;
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId)
+  const isCurrent = channelId === currentChannelId
 
-  const [isOpenRemoveChannelForm, setIsOpenRemoveChannelForm] = useState(false);
-  const [isOpenEditChannelForm, setIsOpenEditChannelForm] = useState(false);
+  const [isOpenRemoveChannelForm, setIsOpenRemoveChannelForm] = useState(false)
+  const [isOpenEditChannelForm, setIsOpenEditChannelForm] = useState(false)
 
   const handleClick = () => {
-    dispatch(setCurrentChannelId(channelId));
-  };
+    dispatch(setCurrentChannelId(channelId))
+  }
 
   return (
     <li className="nav-item w-100">
@@ -56,7 +56,7 @@ const UserChannel = ({ channelName, channelId }) => {
         setIsOpenEditChannelForm={setIsOpenEditChannelForm}
       />
     </li>
-  );
-};
+  )
+}
 
-export default UserChannel;
+export default UserChannel

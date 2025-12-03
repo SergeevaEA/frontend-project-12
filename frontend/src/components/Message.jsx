@@ -5,6 +5,6 @@ const Message = ({ username, text }) => (
     {' '}
     {text}
   </div>
-);
+)
 
-export default Message;
+export default Message

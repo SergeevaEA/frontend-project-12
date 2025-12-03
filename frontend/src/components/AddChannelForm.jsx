@@ -1,22 +1,22 @@
-import { useFormik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRef, useEffect, useState } from 'react';
-import * as yup from 'yup';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
-import addChannel from '../api/addChannel.js';
-import filter from '../profanityFilter.js';
-import { setCurrentChannelId } from '../slices/channels.js';
+import { useFormik } from 'formik'
+import { useSelector, useDispatch } from 'react-redux'
+import { useRef, useEffect, useState } from 'react'
+import * as yup from 'yup'
+import { Modal, Button, Form } from 'react-bootstrap'
+import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
+import addChannel from '../api/addChannel.js'
+import filter from '../profanityFilter.js'
+import { setCurrentChannelId } from '../slices/channels.js'
 
 const AddChannelForm = ({ isOpen, setIsOpen }) => {
-  const inputRef = useRef(null);
-  const token = useSelector((state) => state.user.token);
-  const channels = useSelector((state) => state.channels.entities);
-  const channelsNames = Object.values(channels).map((channel) => channel.name);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const inputRef = useRef(null)
+  const token = useSelector((state) => state.user.token)
+  const channels = useSelector((state) => state.channels.entities)
+  const channelsNames = Object.values(channels).map((channel) => channel.name)
+  const [isDisabled, setIsDisabled] = useState(false)
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
 
   const AddChannelSchema = yup.object().shape({
     name: yup
@@ -24,38 +24,38 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
       .min(3, t('errors.eighteenSimbols'))
       .max(20, t('errors.eighteenSimbols'))
       .test('isUnique', t('errors.unique'), (value) => !channelsNames.includes(value)),
-  });
+  })
 
   const formik = useFormik({
     initialValues: { name: '' },
     validationSchema: AddChannelSchema,
     onSubmit: async (value, { resetForm }) => {
-      setIsDisabled(true);
+      setIsDisabled(true)
       try {
-        const name = filter.clean(value.name);
-        const newChannel = await addChannel(token, { name });
-        dispatch(setCurrentChannelId(newChannel.id));
-        resetForm();
-        setIsOpen(false);
-        toast(t('success.channelCreated'));
+        const name = filter.clean(value.name)
+        const newChannel = await addChannel(token, { name })
+        dispatch(setCurrentChannelId(newChannel.id))
+        resetForm()
+        setIsOpen(false)
+        toast(t('success.channelCreated'))
       } catch {
-        toast(t('errors.networkError'));
+        toast(t('errors.networkError'))
       } finally {
-        setIsDisabled(false);
+        setIsDisabled(false)
       }
     },
-  });
+  })
 
   // Ставим фокус при открытии модального окна
   useEffect(() => {
     if (isOpen) {
-      formik.resetForm();
+      formik.resetForm()
     }
     if (isOpen && inputRef.current) {
       // таймаут нужен, чтобы модальное окно успело отрендериться
-      setTimeout(() => inputRef.current.focus(), 0);
+      setTimeout(() => inputRef.current.focus(), 0)
     }
-  }, [isOpen]);
+  }, [isOpen])
 
   return (
     <Modal show={isOpen} onHide={() => setIsOpen(false)} centered>
@@ -87,7 +87,7 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
         </Form>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default AddChannelForm;
+export default AddChannelForm

@@ -1,7 +1,7 @@
-import filter from 'leo-profanity';
+import filter from 'leo-profanity'
 
 // загружаем русский словарь
-filter.add(filter.getDictionary('en'));
-filter.add(filter.getDictionary('ru'));
+filter.add(filter.getDictionary('en'))
+filter.add(filter.getDictionary('ru'))
 
-export default filter;
+export default filter

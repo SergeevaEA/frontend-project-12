@@ -1,25 +1,25 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import Header from '../components/HomePageHeader';
-import PlusButton from '../components/PlusButton';
-import ChannelsBlock from '../components/ChannelsBlock';
-import CurrentChannelInfoBlock from '../components/CurrentChannelInfoBlock';
-import MessagesBlock from '../components/MessagesBlock';
-import MessageInputBlock from '../components/MessageInputBlock';
-import AddChannelForm from '../components/AddChannelForm';
-import { login } from '../slices/user';
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import Header from '../components/HomePageHeader'
+import PlusButton from '../components/PlusButton'
+import ChannelsBlock from '../components/ChannelsBlock'
+import CurrentChannelInfoBlock from '../components/CurrentChannelInfoBlock'
+import MessagesBlock from '../components/MessagesBlock'
+import MessageInputBlock from '../components/MessageInputBlock'
+import AddChannelForm from '../components/AddChannelForm'
+import { login } from '../slices/user'
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState(false)
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const username = localStorage.getItem('username');
-    const handle = () => ((!token) ? navigate('/login') : dispatch(login({ username, token })));
-    handle();
-  }, [navigate, dispatch]);
+    const token = localStorage.getItem('token')
+    const username = localStorage.getItem('username')
+    const handle = () => ((!token) ? navigate('/login') : dispatch(login({ username, token })))
+    handle()
+  }, [navigate, dispatch])
   return (
     <div className="d-flex flex-column h-100">
       <Header />
@@ -45,7 +45,7 @@ const HomePage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

@@ -1,15 +1,15 @@
 /* eslint-disable functional/no-expression-statement */
 
-import i18next from 'i18next';
-import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { Provider } from 'react-redux';
-import App from './App.jsx';
-import resources from './locales/index.js';
-import store from './slices/index.js';
-import newChannelSubscribe from './api/newChannelSubscribe.js';
-import newMessagesSubscribe from './api/newMessagesSubscribe.js';
-import removeChannelSubscribe from './api/removeChannelSubscribe.js';
-import renameChannelSubscribe from './api/renameChannelSubscribe.js';
+import i18next from 'i18next'
+import { I18nextProvider, initReactI18next } from 'react-i18next'
+import { Provider } from 'react-redux'
+import App from './App.jsx'
+import resources from './locales/index.js'
+import store from './slices/index.js'
+import newChannelSubscribe from './api/newChannelSubscribe.js'
+import newMessagesSubscribe from './api/newMessagesSubscribe.js'
+import removeChannelSubscribe from './api/removeChannelSubscribe.js'
+import renameChannelSubscribe from './api/renameChannelSubscribe.js'
 // import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react'
 
 // const rollbarConfig = {
@@ -18,20 +18,20 @@ import renameChannelSubscribe from './api/renameChannelSubscribe.js';
 // };
 
 const init = async () => {
-  const i18n = i18next.createInstance();
+  const i18n = i18next.createInstance()
 
   await i18n
     .use(initReactI18next)
     .init({
       resources,
       fallbackLng: 'ru',
-    });
+    })
 
   // вызов подписок
-  newChannelSubscribe();
-  newMessagesSubscribe();
-  removeChannelSubscribe();
-  renameChannelSubscribe();
+  newChannelSubscribe()
+  newMessagesSubscribe()
+  removeChannelSubscribe()
+  renameChannelSubscribe()
 
   return (
   // <RollbarProvider config={rollbarConfig}>
@@ -43,7 +43,7 @@ const init = async () => {
     </Provider>
   // </ErrorBoundary>
   // </RollbarProvider>
-  );
-};
+  )
+}
 
-export default init;
+export default init

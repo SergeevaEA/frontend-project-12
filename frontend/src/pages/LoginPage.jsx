@@ -1,11 +1,11 @@
-import Header from '../components/LoginAndSignupPageHeader.jsx';
-import LoginForm from '../components/LoginForm.jsx';
+import Header from '../components/LoginAndSignupPageHeader.jsx'
+import LoginForm from '../components/LoginForm.jsx'
 
 const LoginPage = () => (
   <div className="d-flex flex-column h-100">
     <Header />
     <LoginForm />
   </div>
-);
+)
 
-export default LoginPage;
+export default LoginPage

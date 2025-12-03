@@ -25,9 +25,9 @@ build:
 preview:
 	cd frontend && npm run preview
 
-# Линтинг фронтенда
+# Линтинг фронтенда (автоматически исправляет ошибки при помощи --fix)
 lint:
-	cd frontend && npx eslint .
+	cd frontend && npx eslint . --ext .js,.jsx --fix
 
 # Очистка сборки фронтенда
 clean:
