@@ -55,7 +55,7 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
       // таймаут нужен, чтобы модальное окно успело отрендериться
       setTimeout(() => inputRef.current.focus(), 0);
     }
-  }, [isOpen, formik]);
+  }, [isOpen]);
 
   return (
     <Modal show={isOpen} onHide={() => setIsOpen(false)} centered>
