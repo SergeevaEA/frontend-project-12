@@ -1,9 +1,9 @@
-import axios from "axios"
+import axios from 'axios';
 
 const signupRequest = async (values) => {
-    const response = await axios
-        .post('/api/v1/signup', { username: values.username, password: values.password })
-    return response.data // => { token: ..., username: 'newuser' }
-}
+  const response = await axios
+    .post('/api/v1/signup', { username: values.username, password: values.password });
+  return response.data; // => { token: ..., username: 'newuser' }
+};
 
-export default signupRequest
+export default signupRequest;
