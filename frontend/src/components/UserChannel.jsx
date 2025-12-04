@@ -9,7 +9,7 @@ import EditChannelForm from './EditChannelForm.jsx'
 const UserChannel = ({ channelName, channelId }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId)
+  const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const isCurrent = channelId === currentChannelId
 
   const [isOpenRemoveChannelForm, setIsOpenRemoveChannelForm] = useState(false)

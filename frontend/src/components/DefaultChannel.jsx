@@ -6,7 +6,7 @@ import { setCurrentChannelId } from '../slices/channels'
 const DefaultChannel = ({ channelName, channelId }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId)
+  const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const isCurrent = (channelId === currentChannelId)
   const handleClick = () => {
     dispatch(setCurrentChannelId(channelId))

@@ -13,9 +13,9 @@ const EditChannelForm = ({
 }) => {
   const { t } = useTranslation()
   const inputRef = useRef(null)
-  const token = useSelector((state) => state.user.token)
-  const channels = useSelector((state) => state.channels.entities)
-  const channelsNames = Object.values(channels).map((channel) => channel.name)
+  const token = useSelector(state => state.user.token)
+  const channels = useSelector(state => state.channels.entities)
+  const channelsNames = Object.values(channels).map(channel => channel.name)
   const [isDisabled, setIsDisabled] = useState(false)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const EditChannelForm = ({
       .min(3, t('errors.eighteenSimbols'))
       .max(20, t('errors.eighteenSimbols'))
       .required(t('errors.required'))
-      .test('isUnique', t('errors.unique'), (value) => value === channelName || !channelsNames.includes(value)),
+      .test('isUnique', t('errors.unique'), value => value === channelName || !channelsNames.includes(value)),
   })
 
   const formik = useFormik({
@@ -45,9 +45,11 @@ const EditChannelForm = ({
         resetForm()
         setIsOpenEditChannelForm(false)
         toast(t('success.channelEdited'))
-      } catch {
+      }
+      catch {
         toast(t('errors.networkError'))
-      } finally {
+      }
+      finally {
         setIsDisabled(false)
       }
     },

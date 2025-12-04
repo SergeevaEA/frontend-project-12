@@ -11,9 +11,9 @@ import { setCurrentChannelId } from '../slices/channels.js'
 
 const AddChannelForm = ({ isOpen, setIsOpen }) => {
   const inputRef = useRef(null)
-  const token = useSelector((state) => state.user.token)
-  const channels = useSelector((state) => state.channels.entities)
-  const channelsNames = Object.values(channels).map((channel) => channel.name)
+  const token = useSelector(state => state.user.token)
+  const channels = useSelector(state => state.channels.entities)
+  const channelsNames = Object.values(channels).map(channel => channel.name)
   const [isDisabled, setIsDisabled] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
       .string()
       .min(3, t('errors.eighteenSimbols'))
       .max(20, t('errors.eighteenSimbols'))
-      .test('isUnique', t('errors.unique'), (value) => !channelsNames.includes(value)),
+      .test('isUnique', t('errors.unique'), value => !channelsNames.includes(value)),
   })
 
   const formik = useFormik({
@@ -38,9 +38,11 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
         resetForm()
         setIsOpen(false)
         toast(t('success.channelCreated'))
-      } catch {
+      }
+      catch {
         toast(t('errors.networkError'))
-      } finally {
+      }
+      finally {
         setIsDisabled(false)
       }
     },

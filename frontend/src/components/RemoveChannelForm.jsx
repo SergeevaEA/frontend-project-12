@@ -7,7 +7,7 @@ import removeChannelRequest from '../api/removeChannelRequest.js'
 
 const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemoveChannelForm }) => {
   const { t } = useTranslation()
-  const token = useSelector((state) => state.user.token)
+  const token = useSelector(state => state.user.token)
   const [isDisabled, setIsDisabled] = useState(false)
   return (
     <Modal show={isOpenRemoveChannelForm} onHide={() => setIsOpenRemoveChannelForm(false)} centered>
@@ -29,9 +29,11 @@ const RemoveChannelForm = ({ channelId, isOpenRemoveChannelForm, setIsOpenRemove
               try {
                 await removeChannelRequest(token, channelId)
                 toast(t('success.channelRemoved'))
-              } catch {
+              }
+              catch {
                 toast(t('errors.networkError'))
-              } finally {
+              }
+              finally {
                 setIsDisabled(false)
               }
             }}

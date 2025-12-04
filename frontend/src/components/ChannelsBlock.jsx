@@ -7,25 +7,25 @@ import UserChannel from './UserChannel.jsx'
 
 const ChannelsBlock = () => {
   const dispatch = useDispatch()
-  const token = useSelector((state) => state.user.token)
+  const token = useSelector(state => state.user.token)
   useEffect(() => {
     getChannels(token)
-      .then((data) => dispatch(setChannels(data)))
+      .then(data => dispatch(setChannels(data)))
   }, [token, dispatch])
-  const { entities, ids } = useSelector((state) => state.channels)
-  const orderedChannels = ids.map((id) => entities[id])
-  const defaultChannels = orderedChannels.filter((channel) => channel.removable === false)
-  const userChannels = orderedChannels.filter((channel) => channel.removable === true)
+  const { entities, ids } = useSelector(state => state.channels)
+  const orderedChannels = ids.map(id => entities[id])
+  const defaultChannels = orderedChannels.filter(channel => channel.removable === false)
+  const userChannels = orderedChannels.filter(channel => channel.removable === true)
   return (
     <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-      {defaultChannels.map((channel) => (
+      {defaultChannels.map(channel => (
         <DefaultChannel
           key={channel.id}
           channelName={channel.name}
           channelId={channel.id}
         />
       ))}
-      {userChannels.map((channel) => (
+      {userChannels.map(channel => (
         <UserChannel
           key={channel.id}
           channelName={channel.name}

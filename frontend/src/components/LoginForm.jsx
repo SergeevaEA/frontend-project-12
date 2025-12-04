@@ -31,10 +31,12 @@ const LoginForm = () => {
         localStorage.setItem('username', username)
         dispatch(login({ username, token }))
         navigate('/')
-      } catch (error) {
+      }
+      catch (error) {
         const handle = () => ((error.response.status === 401) ? toast(t('errors.usernameOrPasswordError')) : toast(t('errors.networkError')))
         handle()
-      } finally {
+      }
+      finally {
         setIsDisabled(false)
       }
     },

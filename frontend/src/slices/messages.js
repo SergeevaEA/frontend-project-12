@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { logout } from './user.js'
 import { removeChannel } from './channels.js'
@@ -18,7 +17,7 @@ const messagesSlice = createSlice({
       messages.forEach((mes) => {
         state.entities[mes.id] = mes
       })
-      state.ids = messages.map((mes) => mes.id)
+      state.ids = messages.map(mes => mes.id)
     },
     postMessage: (state, action) => {
       const message = action.payload

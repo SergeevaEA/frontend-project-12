@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 
 const CurrentChannelInfoBlock = () => {
   const { t } = useTranslation()
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId)
-  const currentName = useSelector((state) => state.channels.entities[currentChannelId].name)
-  const numerOfMessages = useSelector((state) => Object.values(state.messages.entities)
-    .filter((message) => message.channelId === currentChannelId)
+  const currentChannelId = useSelector(state => state.channels.currentChannelId)
+  const currentName = useSelector(state => state.channels.entities[currentChannelId].name)
+  const numerOfMessages = useSelector(state => Object.values(state.messages.entities)
+    .filter(message => message.channelId === currentChannelId)
     .length)
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">

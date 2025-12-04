@@ -40,10 +40,12 @@ const SignupForm = () => {
         localStorage.setItem('username', username)
         dispatch(login({ username, token }))
         navigate('/')
-      } catch (error) {
+      }
+      catch (error) {
         const handle = () => ((error.response.status === 409) ? toast(t('errors.alreadyExists')) : toast(t('errors.networkError')))
         handle()
-      } finally {
+      }
+      finally {
         setIsDisabled(false)
       }
     },

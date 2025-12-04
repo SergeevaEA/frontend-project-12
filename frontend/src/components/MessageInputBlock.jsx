@@ -11,9 +11,9 @@ import filter from '../profanityFilter.js'
 const MessageInputBlock = () => {
   const { t } = useTranslation()
   const inputRef = useRef(null)
-  const token = useSelector((state) => state.user.token)
-  const username = useSelector((state) => state.user.username)
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId)
+  const token = useSelector(state => state.user.token)
+  const username = useSelector(state => state.user.username)
+  const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const [isDisabled, setIsDisabled] = useState(false)
 
   useEffect(() => {
@@ -30,10 +30,12 @@ const MessageInputBlock = () => {
           await addMessage(token, { body: text, channelId: currentChannelId, username })
           resetForm()
         }
-      } catch {
+      }
+      catch {
         resetForm()
         toast(t('errors.networkError'))
-      } finally {
+      }
+      finally {
         setIsDisabled(false)
       }
     },

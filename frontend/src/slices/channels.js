@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { logout } from './user.js'
 
@@ -21,7 +20,7 @@ const channelsSlice = createSlice({
       channels.forEach((ch) => {
         state.entities[ch.id] = ch
       })
-      state.ids = channels.map((ch) => ch.id)
+      state.ids = channels.map(ch => ch.id)
     },
     postNewChannel: (state, action) => {
       const newChannel = action.payload
@@ -34,7 +33,7 @@ const channelsSlice = createSlice({
     removeChannel: (state, action) => {
       const idToDelete = action.payload
       delete state.entities[idToDelete]
-      state.ids = state.ids.filter((id) => id !== idToDelete)
+      state.ids = state.ids.filter(id => id !== idToDelete)
 
       state.currentChannelId = '1'
     },

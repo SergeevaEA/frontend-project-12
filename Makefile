@@ -27,7 +27,7 @@ preview:
 
 # Линтинг фронтенда (автоматически исправляет ошибки при помощи --fix)
 lint:
-	cd frontend && npx eslint . --ext .js,.jsx --fix
+	cd frontend && npx eslint --no-config-lookup --config eslint.config.js . --fix
 
 # Очистка сборки фронтенда
 clean:
