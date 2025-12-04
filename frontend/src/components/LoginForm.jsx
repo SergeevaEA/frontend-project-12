@@ -1,19 +1,17 @@
 import { Card, Form, Button } from 'react-bootstrap'
-import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { login } from '../slices/user.js'
-import loginRequest from '../api/loginRequest.js'
 import avatar from '../assets/avatar.jpg'
+import loginFormAction from '../formActions/loginFormAction.js'
 
 const LoginForm = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const inputRef = useRef(null)
-  const navigate = useNavigate()
   const [isDisabled, setIsDisabled] = useState(false)
 
   const formik = useFormik({
@@ -22,23 +20,7 @@ const LoginForm = () => {
       password: '',
     },
     onSubmit: async (values) => {
-      setIsDisabled(true)
-      try {
-        const data = await loginRequest(values)
-        const { token } = data
-        const { username } = values
-        localStorage.setItem('token', token)
-        localStorage.setItem('username', username)
-        dispatch(login({ username, token }))
-        navigate('/')
-      }
-      catch (error) {
-        const handle = () => ((error.response.status === 401) ? toast(t('errors.usernameOrPasswordError')) : toast(t('errors.networkError')))
-        handle()
-      }
-      finally {
-        setIsDisabled(false)
-      }
+      loginFormAction(setIsDisabled, t, navigate, dispatch, values)
     },
   })
 

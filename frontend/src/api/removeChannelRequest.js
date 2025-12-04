@@ -1,12 +1,9 @@
-import axios from 'axios'
+import { apiRoutes } from './apiRoutes'
+import instance from './instance'
 
-const removeChannelRequest = async (token, id) => {
-  const path = `/api/v1/channels/${id}`
-  const response = await axios.delete(path, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+const removeChannelRequest = async (id) => {
+  const path = apiRoutes.removeChannelRequest(id)
+  const response = await instance.delete(path)
   return response.data // => { id: '3' }
 }
 

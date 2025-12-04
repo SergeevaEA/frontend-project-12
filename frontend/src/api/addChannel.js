@@ -1,12 +1,9 @@
-import axios from 'axios'
+import { apiRoutes } from './apiRoutes'
+import instance from './instance'
 
-const addChannel = async (token, newChannel) => {
+const addChannel = async (newChannel) => {
   // Example: newChannel = { name: 'new channel' }
-  const response = await axios.post('/api/v1/channels', newChannel, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  const response = await instance.post(apiRoutes.addChannel, newChannel)
   return response.data // => { id: '3', name: 'new channel', removable: true }
 }
 

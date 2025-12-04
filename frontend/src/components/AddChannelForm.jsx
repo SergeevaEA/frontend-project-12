@@ -1,50 +1,24 @@
 import { useFormik } from 'formik'
-import { useSelector, useDispatch } from 'react-redux'
 import { useRef, useEffect, useState } from 'react'
-import * as yup from 'yup'
 import { Modal, Button, Form } from 'react-bootstrap'
-import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import addChannel from '../api/addChannel.js'
-import filter from '../profanityFilter.js'
-import { setCurrentChannelId } from '../slices/channels.js'
+import { useSelector, useDispatch } from 'react-redux'
+import addChannelSchema from '../schemas/addChannelSchema.js'
+import addChannelFormAction from '../formActions/addChannelFormAction.js'
 
 const AddChannelForm = ({ isOpen, setIsOpen }) => {
   const inputRef = useRef(null)
-  const token = useSelector(state => state.user.token)
-  const channels = useSelector(state => state.channels.entities)
-  const channelsNames = Object.values(channels).map(channel => channel.name)
   const [isDisabled, setIsDisabled] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
-
-  const AddChannelSchema = yup.object().shape({
-    name: yup
-      .string()
-      .min(3, t('errors.eighteenSimbols'))
-      .max(20, t('errors.eighteenSimbols'))
-      .test('isUnique', t('errors.unique'), value => !channelsNames.includes(value)),
-  })
+  const channels = useSelector(state => state.channels.entities)
+  const channelsNames = Object.values(channels).map(channel => channel.name)
 
   const formik = useFormik({
     initialValues: { name: '' },
-    validationSchema: AddChannelSchema,
+    validationSchema: addChannelSchema(t, channelsNames),
     onSubmit: async (value, { resetForm }) => {
-      setIsDisabled(true)
-      try {
-        const name = filter.clean(value.name)
-        const newChannel = await addChannel(token, { name })
-        dispatch(setCurrentChannelId(newChannel.id))
-        resetForm()
-        setIsOpen(false)
-        toast(t('success.channelCreated'))
-      }
-      catch {
-        toast(t('errors.networkError'))
-      }
-      finally {
-        setIsDisabled(false)
-      }
+      addChannelFormAction(setIsDisabled, setIsOpen, t, dispatch, value, { resetForm })
     },
   })
 

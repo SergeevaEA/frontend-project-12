@@ -1,14 +1,11 @@
-import axios from 'axios'
+import { apiRoutes } from './apiRoutes'
+import instance from './instance'
 
-const editChannel = async (token, id, newChannelName) => {
+const editChannel = async (id, newChannelName) => {
   // Example: editChannel = { name: 'new name channel' }
   const channel = { name: newChannelName }
-  const path = `/api/v1/channels/${id}`
-  const response = await axios.patch(path, channel, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  const path = apiRoutes.editChannelRequest(id)
+  const response = await instance.patch(path, channel)
   return response.data // => { id: '3', name: 'new name channel', removable: true }
 }
 

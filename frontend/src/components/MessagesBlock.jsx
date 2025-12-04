@@ -6,11 +6,10 @@ import Message from './Message'
 
 const MessagesList = () => {
   const dispatch = useDispatch()
-  const token = useSelector(state => state.user.token)
   useEffect(() => {
-    getMessages(token)
+    getMessages()
       .then(data => dispatch(setMessages(data)))
-  }, [token, dispatch])
+  }, [dispatch])
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const { entities, ids } = useSelector(state => state.messages)
   const orderedMessages = ids.map(id => entities[id])

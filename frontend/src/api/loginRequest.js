@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { apiRoutes } from './apiRoutes'
 
 const loginRequest = async (values) => {
   const response = await axios
-    .post('/api/v1/login', values)
+    .post(apiRoutes.loginRequest, values)
   return response.data // => { token: ..., username: 'admin' }
 }
 

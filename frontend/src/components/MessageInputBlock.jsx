@@ -2,16 +2,13 @@ import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { useRef, useEffect, useState } from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
-import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import addMessage from '../api/addMessage.js'
 import EnterButton from './EnterButton.jsx'
-import filter from '../profanityFilter.js'
+import messageInputBlockAction from '../formActions/messageInputBlockAction.js'
 
 const MessageInputBlock = () => {
   const { t } = useTranslation()
   const inputRef = useRef(null)
-  const token = useSelector(state => state.user.token)
   const username = useSelector(state => state.user.username)
   const currentChannelId = useSelector(state => state.channels.currentChannelId)
   const [isDisabled, setIsDisabled] = useState(false)
@@ -23,21 +20,7 @@ const MessageInputBlock = () => {
   const formik = useFormik({
     initialValues: { body: '' },
     onSubmit: async (values, { resetForm }) => {
-      setIsDisabled(true)
-      try {
-        if (values.body !== '') {
-          const text = filter.clean(values.body)
-          await addMessage(token, { body: text, channelId: currentChannelId, username })
-          resetForm()
-        }
-      }
-      catch {
-        resetForm()
-        toast(t('errors.networkError'))
-      }
-      finally {
-        setIsDisabled(false)
-      }
+      messageInputBlockAction(username, currentChannelId, setIsDisabled, t, values, { resetForm })
     },
   })
 

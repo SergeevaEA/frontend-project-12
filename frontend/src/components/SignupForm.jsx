@@ -1,26 +1,18 @@
 import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
 import { useRef, useState } from 'react'
-import * as yup from 'yup'
 import { Card, Form, Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import signupRequest from '../api/signupRequest.js'
-import { login } from '../slices/user.js'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import avatar from '../assets/avatar_1.jpg'
-
-const SignupSchema = yup.object().shape({
-  username: yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
-  password: yup.string().min(6, 'Не менее 6 символов').required('Обязательное поле'),
-  confirmPassword: yup.string().oneOf([yup.ref('password')], 'Пароли должны совпадать').required('Обязательное поле'),
-})
+import signupSchema from '../schemas/signupSchema.js'
+import signupFormAction from '../formActions/signupFormAction.js'
 
 const SignupForm = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const inputRef = useRef(null)
   const navigate = useNavigate()
+  const inputRef = useRef(null)
   const [isDisabled, setIsDisabled] = useState(false)
 
   const formik = useFormik({
@@ -29,25 +21,9 @@ const SignupForm = () => {
       password: '',
       confirmPassword: '',
     },
-    validationSchema: SignupSchema,
+    validationSchema: signupSchema,
     onSubmit: async (values) => {
-      setIsDisabled(true)
-      try {
-        const data = await signupRequest(values)
-        const { token } = data
-        const { username } = values
-        localStorage.setItem('token', token)
-        localStorage.setItem('username', username)
-        dispatch(login({ username, token }))
-        navigate('/')
-      }
-      catch (error) {
-        const handle = () => ((error.response.status === 409) ? toast(t('errors.alreadyExists')) : toast(t('errors.networkError')))
-        handle()
-      }
-      finally {
-        setIsDisabled(false)
-      }
+      signupFormAction(setIsDisabled, t, dispatch, navigate, values)
     },
   })
 

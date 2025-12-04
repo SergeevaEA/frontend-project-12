@@ -7,11 +7,10 @@ import UserChannel from './UserChannel.jsx'
 
 const ChannelsBlock = () => {
   const dispatch = useDispatch()
-  const token = useSelector(state => state.user.token)
   useEffect(() => {
-    getChannels(token)
+    getChannels()
       .then(data => dispatch(setChannels(data)))
-  }, [token, dispatch])
+  }, [dispatch])
   const { entities, ids } = useSelector(state => state.channels)
   const orderedChannels = ids.map(id => entities[id])
   const defaultChannels = orderedChannels.filter(channel => channel.removable === false)
