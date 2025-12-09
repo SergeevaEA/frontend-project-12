@@ -35,6 +35,7 @@ const MessageInputBlock = () => {
           className="border-0 p-0 ps-2"
           onChange={formik.handleChange}
           value={formik.values.body}
+          autoComplete="off"
         />
         <EnterButton disabled={isDisabled || formik.values.body.trim() === ''} />
       </InputGroup>

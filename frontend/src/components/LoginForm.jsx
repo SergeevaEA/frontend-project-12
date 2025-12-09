@@ -45,6 +45,7 @@ const LoginForm = () => {
                     required
                     onChange={formik.handleChange}
                     value={formik.values.username}
+                    autoComplete="off"
                   />
                   <Form.Label>{t('nik')}</Form.Label>
                 </Form.Group>
@@ -56,6 +57,7 @@ const LoginForm = () => {
                     required
                     onChange={formik.handleChange}
                     value={formik.values.password}
+                    autoComplete="off"
                   />
                   <Form.Label>{t('password')}</Form.Label>
                 </Form.Group>

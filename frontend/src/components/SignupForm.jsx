@@ -45,7 +45,7 @@ const SignupForm = () => {
                     ref={inputRef}
                     autoFocus
                     placeholder="От 3 до 20 символов"
-                    autoComplete="username"
+                    autoComplete="off"
                     required
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -63,7 +63,7 @@ const SignupForm = () => {
                     name="password"
                     placeholder={t('errors.min6Simbols')}
                     type="password"
-                    autoComplete="new-password"
+                    autoComplete="off"
                     required
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -81,7 +81,7 @@ const SignupForm = () => {
                     name="confirmPassword"
                     placeholder={t('errors.samePasswords')}
                     type="password"
-                    autoComplete="new-password"
+                    autoComplete="off"
                     required
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}

@@ -48,6 +48,7 @@ const AddChannelForm = ({ isOpen, setIsOpen }) => {
               onChange={formik.handleChange}
               value={formik.values.name}
               isInvalid={formik.touched.name && !!formik.errors.name}
+              autoComplete="off"
             />
             <Form.Label className="visually-hidden">{t('channelName')}</Form.Label>
             <Form.Control.Feedback type="invalid">
