@@ -37,7 +37,7 @@ const SignupForm = () => {
                 <img src={avatar} className="rounded-circle" alt="Регистрация" />
               </div>
               <Form onSubmit={formik.handleSubmit} className="w-50">
-                <h1 className="text-center mb-4">{t('registration')}</h1>
+                <h1 className="text-center mb-4 fs-2">{t('registration')}</h1>
 
                 <Form.Group className="form-floating mb-3" controlId="username">
                   <Form.Control
