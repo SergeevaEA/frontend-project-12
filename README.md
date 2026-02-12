@@ -27,24 +27,31 @@ React, Redux Toolkit, React Redux, React Router, axios, Socket.IO Client, React 
 ## Демонстрация работы проекта
 
 Страница авторизации:
+
 ![Страница авторизации](frontend/src/assets/images/LogIn.png)
 
 Страница регистрации:
+
 ![Страница регистрации](frontend/src/assets/images/SignUp.png)
 
-Страница с чатами:
+Страница с каналами:
+
 ![Страница с чатами](frontend/src/assets/images/MainPage.png)
 
-Добавить чат:
+Добавить канал:
+
 ![Добавить чат](frontend/src/assets/images/AddChannel.png)
 
-Управление чатом:
+Управление каналом:
+
 ![Управление чатом](frontend/src/assets/images/Menu.png)
 
-Переименовать чат:
+Переименовать канал:
+
 ![Переименовать чат](frontend/src/assets/images/EditChannel.png)
 
 Отправка сообщений в чате:
+
 ![Отправка сообщений в чате](frontend/src/assets/images/Message.png)
 
 ## Установка
